@@ -13,6 +13,7 @@ export default defineConfig({
         // German (DE) pages
         main: resolve(__dirname, 'index.html'),
         gallery: resolve(__dirname, 'gallery/index.html'),
+        projects: resolve(__dirname, 'projects/index.html'),
         vita: resolve(__dirname, 'vita/index.html'),
         statement: resolve(__dirname, 'statement/index.html'),
         gt: resolve(__dirname, 'alexkiesslingxgt/index.html'),
@@ -21,6 +22,7 @@ export default defineConfig({
         // English (EN) pages
         en_main: resolve(__dirname, 'en/index.html'),
         en_gallery: resolve(__dirname, 'en/gallery/index.html'),
+        en_projects: resolve(__dirname, 'en/projects/index.html'),
         en_vita: resolve(__dirname, 'en/vita/index.html'),
         en_statement: resolve(__dirname, 'en/statement/index.html'),
         en_gt: resolve(__dirname, 'en/alexkiesslingxgt/index.html'),

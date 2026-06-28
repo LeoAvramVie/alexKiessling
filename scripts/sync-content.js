@@ -136,11 +136,17 @@ function compilePage(page, data, lang) {
     // Fallback image url
     const fallbackUrl = getImageUrl(data.homepage.fallbackImage, 1200) || `${prefix}assets/images/05_SHIFTs28_Neon_Acryliconcanvas_190x250cm_2019-scaled.jpg`;
     
+    // Video Src Url
+    let videoSrc = data.homepage.videoFileUrl || data.homepage.videoPath || '';
+    if (videoSrc.startsWith('/assets/')) {
+      videoSrc = prefix + videoSrc.substring(1);
+    }
+    
     content = content
         .replace('{{TITLE}}', title || 'Alex Kiessling')
         .replace('{{SUBTITLE}}', subtitle || '')
         .replace('{{FALLBACK_IMAGE}}', fallbackUrl)
-        .replace('{{VIDEO_PATH}}', data.homepage.videoPath || '')
+        .replace('{{VIDEO_PATH}}', videoSrc)
         .replace('{{STATEMENT}}', formatTextToHtml(stmt));
   }
   
