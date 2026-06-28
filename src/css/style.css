@@ -2451,6 +2451,21 @@ body.menu-open .header {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
+
+  /* Mobile responsive styling for Vita spacing & typography */
+  .white-cube-divider {
+    display: none;
+  }
+  .vita-highlights-container {
+    margin-bottom: 2.5rem;
+  }
+  .section-subtitle {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem !important;
+  }
+  .vita-header {
+    margin-bottom: 2rem;
+  }
 }
 
 /* Hide footer on the homepage */
