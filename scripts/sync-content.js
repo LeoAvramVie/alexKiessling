@@ -70,8 +70,8 @@ async function sync() {
           dimensions,
           techniqueDe,
           techniqueEn,
-          "image": image.asset->url,
-          "inSituImages": inSituImages[].asset->url,
+          image,
+          inSituImages,
           descriptionDe,
           descriptionEn
         }
