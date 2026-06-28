@@ -679,24 +679,44 @@ body.menu-open .header {
 /* Mobile responsive adjustments for the hero brand card */
 @media (max-width: 768px) {
   .hero-brand-card {
-    padding: 2rem 1.5rem;
-    width: 95%;
+    padding: 2.5rem 1.25rem;
+    width: 92%;
   }
   .hero-title-elegant {
-    font-size: 2.2rem;
-    --title-spacing: 0.16em;
-    --title-spacing-expanded: 0.20em;
+    font-size: clamp(1.2rem, 6.2vw, 1.8rem);
+    --title-spacing: 0.11em;
+    --title-spacing-expanded: 0.14em;
+    padding-left: var(--title-spacing);
   }
   .hero-emblem-img {
     width: 100px;
     height: 100px;
   }
   .hero-center-nav {
+    display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem var(--spacing-sm);
+    justify-content: center;
+    gap: 0.5rem 0.4rem;
+    width: 100%;
+    margin-top: var(--spacing-sm);
   }
   .hero-center-nav a {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(22, 22, 21, 0.08);
+    border-radius: 20px;
+    color: var(--text-ink);
+    opacity: 0.95;
+    transition: all var(--transition-fast) ease;
+  }
+  .hero-center-nav a:hover,
+  .hero-center-nav a:active {
+    background: var(--text-ink);
+    color: #ffffff;
+    border-color: var(--text-ink);
   }
   .nav-divider {
     display: none; /* Hide dividers to wrap items cleanly on mobile */
@@ -2056,7 +2076,45 @@ body.menu-open .header {
   }
 
   .burger-menu-btn {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(22, 22, 21, 0.08);
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    pointer-events: auto;
+  }
+
+  .burger-bar {
+    width: 18px;
+    height: 2px;
+    background-color: var(--text-ink);
+    position: absolute;
+    left: 12px;
+  }
+
+  .burger-bar:first-child {
+    top: 17px;
+  }
+
+  .burger-bar:last-child {
+    bottom: 17px;
+  }
+
+  .burger-menu-btn.open .burger-bar:first-child {
+    transform: rotate(45deg);
+    top: 21px;
+  }
+
+  .burger-menu-btn.open .burger-bar:last-child {
+    transform: rotate(-45deg);
+    bottom: 21px;
   }
 
   .nav {
