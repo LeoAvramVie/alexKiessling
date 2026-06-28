@@ -141,14 +141,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- 8. NFT ADDRESS HIGHLIGHTING ---
+  // --- 8. NFT ADDRESS HIGHLIGHTING & COPY SYSTEM ---
   const verificationBody = document.querySelector('.verification-body');
   if (verificationBody) {
     const ethAddressRegex = /0x[a-fA-F0-9]{40}/g;
     verificationBody.innerHTML = verificationBody.innerHTML.replace(
       ethAddressRegex,
-      (match) => `<code class="eth-address">${match}</code>`
+      (match) => `
+        <span class="eth-address-block">
+          <code class="eth-address-val">${match}</code>
+          <button class="eth-copy-btn" title="Copy Address" data-address="${match}">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span class="copy-tooltip">Copy</span>
+          </button>
+        </span>
+      `
     );
+
+    // Bind copy-to-clipboard click handlers
+    verificationBody.querySelectorAll('.eth-copy-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const address = btn.getAttribute('data-address');
+        navigator.clipboard.writeText(address).then(() => {
+          const tooltip = btn.querySelector('.copy-tooltip');
+          if (tooltip) {
+            tooltip.textContent = 'Copied!';
+            tooltip.classList.add('active');
+            setTimeout(() => {
+              tooltip.textContent = 'Copy';
+              tooltip.classList.remove('active');
+            }, 2000);
+          }
+        }).catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+      });
+    });
   }
 
   // --- 9. SCROLL TO TOP BUTTON ---

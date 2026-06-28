@@ -1727,19 +1727,85 @@ body.menu-open .header {
   margin-bottom: var(--spacing-md);
 }
 
-.eth-address {
-  font-family: var(--font-mono) !important;
-  font-size: 0.82rem !important;
-  color: var(--text-ink) !important;
-  background: rgba(22, 22, 21, 0.05);
-  border: 1px solid rgba(22, 22, 21, 0.08);
-  padding: 0.15rem 0.35rem;
+.eth-address-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f7f6f0;
+  border: 1px solid var(--border-light);
   border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin: 0.6rem 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.eth-address-val {
+  font-family: var(--font-mono) !important;
+  font-size: 0.76rem !important;
+  color: var(--text-ink) !important;
   word-break: break-all;
-  overflow-wrap: break-word;
-  display: inline;
-  font-weight: 500;
+  user-select: all;
   text-transform: none !important;
+  font-weight: 500;
+}
+
+.eth-copy-btn {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--text-slate) !important;
+  transition: color 0.2s ease !important;
+  position: relative;
+  margin-left: 0.5rem;
+}
+
+.eth-copy-btn:hover {
+  color: var(--text-ink) !important;
+}
+
+.copy-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.copy-tooltip {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-ink);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+  z-index: 100;
+  text-transform: none !important;
+}
+
+.copy-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--text-ink);
+}
+
+.eth-copy-btn:hover .copy-tooltip,
+.copy-tooltip.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
 }
 
 /* --- 13. PRIVACY & IMPRESSUM PAGE --- */
