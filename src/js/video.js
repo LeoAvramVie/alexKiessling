@@ -38,10 +38,9 @@ export function initBackgroundVideo(videoPath, fallbackImagePath) {
     }
   });
 
-  // Safety fallback if video is shorter than END_TIME
-  video.addEventListener('ended', () => {
-    video.currentTime = START_TIME;
-    video.play().catch(err => console.warn('Replay failed:', err));
+  // Remove fallback background image when the video starts playing
+  video.addEventListener('playing', () => {
+    container.style.backgroundImage = 'none';
   });
 
   const source = document.createElement('source');

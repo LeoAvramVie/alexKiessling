@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap');
 
 @theme {
   --animate-subtle-breathe: subtle-text-breathe 20s infinite ease-in-out;
@@ -71,6 +70,31 @@
   font-display: swap;
   src: url('../assets/fonts/space-grotesk-v16-latin-normal-700.woff2') format('woff2');
 }
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../assets/fonts/roboto-v30-latin-300.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/roboto-v30-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/roboto-v30-latin-700.woff2') format('woff2');
+}
+
 
 /* --- 2. DESIGN SYSTEM TOKENS --- */
 :root {
