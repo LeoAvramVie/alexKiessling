@@ -1,6 +1,42 @@
 export function initGallery() {
   const filterTabs = document.querySelectorAll('.filter-tabs-container button');
+  const grid = document.querySelector('.gallery-masonry-grid');
+  if (!grid) return;
+
   const cards = document.querySelectorAll('.gallery-item-card');
+  const originalCardsArray = Array.from(cards);
+
+  // Hidden pool container to store filtered out cards physically outside the grid
+  let pool = document.getElementById('gallery-hidden-pool');
+  if (!pool) {
+    pool = document.createElement('div');
+    pool.id = 'gallery-hidden-pool';
+    pool.style.display = 'none';
+    document.body.appendChild(pool);
+  }
+
+  const applyFilter = (filterValue) => {
+    originalCardsArray.forEach(card => {
+      const category = card.getAttribute('data-category');
+      const shouldShow = (filterValue === 'All' || category === filterValue);
+      if (shouldShow) {
+        grid.appendChild(card); // Re-insert card in original order
+        card.classList.remove('hidden');
+      } else {
+        pool.appendChild(card); // Move to hidden pool
+        card.classList.add('hidden');
+      }
+    });
+
+    // Force WebKit columns reflow to fix gap at top of columns without flicker
+    requestAnimationFrame(() => {
+      grid.style.columnGap = '0.74rem';
+      grid.offsetHeight; // trigger reflow
+      requestAnimationFrame(() => {
+        grid.style.columnGap = '';
+      });
+    });
+  };
 
   // --- 1. FILTER TABS LOGIK ---
   filterTabs.forEach(btn => {
@@ -10,27 +46,7 @@ export function initGallery() {
       btn.classList.add('active');
 
       const filterValue = btn.getAttribute('data-filter');
-
-      cards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        if (filterValue === 'All' || category === filterValue) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-
-      // Force WebKit columns reflow to fix gap at top of columns without flicker
-      const grid = document.querySelector('.gallery-masonry-grid');
-      if (grid) {
-        requestAnimationFrame(() => {
-          grid.style.columnGap = '0.74rem';
-          grid.offsetHeight; // trigger reflow
-          requestAnimationFrame(() => {
-            grid.style.columnGap = '';
-          });
-        });
-      }
+      applyFilter(filterValue);
     });
   });
 
@@ -38,26 +54,7 @@ export function initGallery() {
   const initialActiveTab = document.querySelector('.filter-tabs-container button.active');
   if (initialActiveTab) {
     const filterValue = initialActiveTab.getAttribute('data-filter');
-    cards.forEach(card => {
-      const category = card.getAttribute('data-category');
-      if (category === filterValue) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
-    });
-
-    // Force WebKit columns reflow on load without flicker
-    const grid = document.querySelector('.gallery-masonry-grid');
-    if (grid) {
-      requestAnimationFrame(() => {
-        grid.style.columnGap = '0.74rem';
-        grid.offsetHeight; // trigger reflow
-        requestAnimationFrame(() => {
-          grid.style.columnGap = '';
-        });
-      });
-    }
+    applyFilter(filterValue);
   }
 
   // --- 2. DESKTOP RGB SHIFT OVERLAYS ---

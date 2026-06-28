@@ -2739,13 +2739,13 @@ body.menu-open .header {
 
   .page-title {
     font-size: clamp(2.6rem, 10vw, 3.8rem) !important;
-    font-weight: 700 !important;
+    font-weight: 300 !important;
     margin-bottom: 0.4rem !important;
   }
 
   .project-title-col h3 {
     font-size: clamp(1.4rem, 6.5vw, 1.8rem) !important;
-    font-weight: 700 !important;
+    font-weight: 400 !important;
     margin-bottom: 0.3rem !important;
   }
 
