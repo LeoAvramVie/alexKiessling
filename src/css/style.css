@@ -1865,9 +1865,7 @@ body.menu-open .header {
 }
 
 .lightbox-carousel-controls {
-  margin-top: var(--spacing-sm);
-  display: flex;
-  gap: 0.5rem;
+  display: none !important;
 }
 
 .carousel-dot {
@@ -1993,6 +1991,10 @@ body.menu-open .header {
 
 .scale-visualizer-container.visible {
   display: block;
+}
+
+.scale-close-btn {
+  display: none;
 }
 
 .scale-visualizer-stage {
@@ -2402,6 +2404,32 @@ body.menu-open .header {
     border: none !important;
     border-radius: 0 !important;
     padding: 1.5rem !important;
+  }
+
+  .scale-close-btn {
+    display: flex !important;
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid var(--border-light) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.6rem !important;
+    color: var(--text-ink) !important;
+    z-index: 110 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+    padding-bottom: 4px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .scale-close-btn:active {
+    transform: scale(0.92) !important;
+    background: #ffffff !important;
   }
 
   .lightbox-details-sidebar::before {

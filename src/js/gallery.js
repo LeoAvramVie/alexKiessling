@@ -117,16 +117,39 @@ export function initGallery() {
       activeCard = card;
       const fullImgUrl = card.getAttribute('data-full');
       const title = card.querySelector('.label-title').textContent;
-      const year = card.getAttribute('data-year');
-      const medium = card.getAttribute('data-technique');
-      const dim = card.getAttribute('data-dimensions');
+      const rawYear = card.getAttribute('data-year');
+      const medium = card.getAttribute('data-technique') || 'TBA';
+      const rawDim = card.getAttribute('data-dimensions');
+
+      // Parse year and dimensions from title first, fallback to dataset, or use 'TBA'
+      let finalYear = 'TBA';
+      let finalDim = 'TBA';
+
+      // 1. Parse Year: look for 4 digits (from 1980 to 2030)
+      const yearRegex = /\b(19[89]\d|20[0-2]\d)\b/;
+      const titleYearMatch = title.match(yearRegex);
+      if (titleYearMatch) {
+        finalYear = titleYearMatch[1];
+      } else if (rawYear && rawYear.trim()) {
+        const rawYearMatch = rawYear.match(yearRegex);
+        finalYear = rawYearMatch ? rawYearMatch[1] : rawYear.trim();
+      }
+
+      // 2. Parse Dimensions: look for pattern like 190x250cm or 190x250
+      const dimRegex = /\b\d+\s*[xX]\s*\d+\s*(?:cm)?\b/;
+      const titleDimMatch = title.match(dimRegex);
+      if (titleDimMatch) {
+        finalDim = titleDimMatch[0];
+      } else if (rawDim && rawDim.trim()) {
+        finalDim = rawDim.trim();
+      }
 
       // Populate lightbox data
       lightboxImg.src = fullImgUrl;
       lightboxTitle.textContent = title;
-      lightboxYear.textContent = year;
+      lightboxYear.textContent = finalYear;
       lightboxMedium.textContent = medium;
-      lightboxDim.textContent = dim || 'K.A.';
+      lightboxDim.textContent = finalDim;
 
       // Reset Scale Widget State
       scaleContainer.classList.remove('visible');
@@ -136,7 +159,7 @@ export function initGallery() {
       // Dimensions format example: "140x140cm" or "200x230cm"
       let widthCm = 100;
       let heightCm = 100;
-      const dimMatch = dim ? dim.match(/(\d+)\s*[xX]\s*(\d+)/) : null;
+      const dimMatch = finalDim ? finalDim.match(/(\d+)\s*[xX]\s*(\d+)/) : null;
       if (dimMatch) {
         widthCm = parseInt(dimMatch[1]);
         heightCm = parseInt(dimMatch[2]);
@@ -198,6 +221,16 @@ export function initGallery() {
     const active = scaleToggle.classList.toggle('active');
     scaleContainer.classList.toggle('visible', active);
   });
+
+  // Close Scale Widget inside overlay
+  const scaleCloseBtn = lightbox.querySelector('.scale-close-btn');
+  if (scaleCloseBtn) {
+    scaleCloseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      scaleContainer.classList.remove('visible');
+      scaleToggle.classList.remove('active');
+    });
+  }
 
   // Expand mobile bottom sheet on touch drag
   const sidebar = lightbox.querySelector('.lightbox-details-sidebar');
