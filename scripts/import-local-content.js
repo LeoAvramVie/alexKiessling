@@ -1,4 +1,4 @@
-import { createReadStream, existsSync, readdirSync } from 'fs';
+import { createReadStream, existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { join, resolve, basename } from 'path';
 import { createClient } from '@sanity/client';
 import dotenv from 'dotenv';
@@ -45,8 +45,9 @@ const imagesDir = join(baseDir, 'assets', 'images');
 function resolveLocalImagePath(imageUrl) {
   if (!imageUrl) return null;
   const fileName = imageUrl.split('/').pop().split('?')[0];
+  if (!fileName) return null;
   const fullPath = join(imagesDir, fileName);
-  if (existsSync(fullPath)) {
+  if (existsSync(fullPath) && statSync(fullPath).isFile()) {
     return fullPath;
   }
   return null;
@@ -111,7 +112,7 @@ async function importContent() {
   const footerDoc = {
     _id: 'footer',
     _type: 'footer',
-    email: 'office@alexkiessling.com',
+    email: 'info@alexkiessling.com',
     instagramUrl: 'https://www.instagram.com/alexkiessling/',
     facebookUrl: 'https://de-de.facebook.com/pages/category/Artist/ALEX-KIESSLING-236103737238/',
     youtubeChannelUrl: 'https://www.youtube.com/user/alexkieszling',
@@ -125,7 +126,7 @@ Alexander Kiessling
 Bildender Künstler
 Wien, Österreich
 
-E-Mail: office@alexkiessling.com
+E-Mail: info@alexkiessling.com
 Aufsichtsbehörde: Magistrat der Stadt Wien
 Gewerbe- und berufsrechtliche Vorschriften: Gewerbeordnung (GewO) – www.ris.bka.gv.at
 
@@ -137,7 +138,7 @@ Alexander Kiessling
 Fine Artist
 Vienna, Austria
 
-Email: office@alexkiessling.com
+Email: info@alexkiessling.com
 Regulatory authority: Magistrat der Stadt Wien
 Professional regulations: Gewerbeordnung (GewO) – www.ris.bka.gv.at
 
@@ -156,7 +157,7 @@ Google Fonts und alle Mediendateien werden ausschließlich lokal von unserem eig
 Der Hoster World4You erhebt automatisch Daten über Zugriffe auf die Seite (z.B. IP-Adresse, Browsertyp, Uhrzeit). Dies ist technisch notwendig, um die Sicherheit und Stabilität der Website zu gewährleisten.
 
 4. Ihre Rechte
-Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten. Wenden Sie sich hierzu an office@alexkiessling.com.`,
+Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten. Wenden Sie sich hierzu an info@alexkiessling.com.`,
     privacyEn: `Privacy Policy (GDPR)
 
 1. General Information
@@ -170,7 +171,7 @@ Google Fonts and all media files are loaded locally from our own webserver, mean
 The hosting provider World4You automatically collects access logs (e.g. IP address, browser type, timestamp). This is technically required to maintain website stability and security.
 
 4. Your Rights
-You have the right to receive information about your stored personal data, its origin, recipients, and purpose of processing free of charge. You also have the right to request correction, blocking, or deletion of this data by contacting office@alexkiessling.com.`
+You have the right to receive information about your stored personal data, its origin, recipients, and purpose of processing free of charge. You also have the right to request correction, blocking, or deletion of this data by contacting info@alexkiessling.com.`
   };
   await client.createOrReplace(footerDoc);
   console.log('✅ Footer singleton imported.');
@@ -189,6 +190,30 @@ You have the right to receive information about your stored personal data, its o
     };
     await client.createOrReplace(doc);
     console.log(`✅ Vita item imported: ${item.year} - ${item.title}`);
+  }
+
+  // 4b. IMPORT STATEMENTS & ESSAYS
+  console.log('Importing Statements and Essays...');
+  const allStatementsPath = '/Users/leoavram/.gemini/antigravity-ide/brain/a16e1ea1-3e9d-47e7-9c2e-c488c65b3291/scratch/all_statements.json';
+  if (existsSync(allStatementsPath)) {
+    const allStatements = JSON.parse(
+        readFileSync(allStatementsPath, 'utf-8')
+    );
+    for (let i = 0; i < allStatements.length; i++) {
+      const stmt = allStatements[i];
+      const docId = makeId('statement', `${stmt.author}-${i}`);
+      const doc = {
+        _id: docId,
+        _type: 'statement',
+        title: stmt.title,
+        author: stmt.author,
+        textDe: stmt.textDe,
+        textEn: stmt.textEn,
+        order: i
+      };
+      await client.createOrReplace(doc);
+      console.log(`✅ Statement item [${i+1}/${allStatements.length}] imported: ${stmt.title}`);
+    }
   }
 
   // 5. IMPORT GALLERY ITEMS

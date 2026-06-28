@@ -5,14 +5,12 @@ export function initBackgroundVideo(videoPath, fallbackImagePath) {
   // Set fallback image by default
   container.style.backgroundImage = `url(${fallbackImagePath})`;
 
-  // Check connection speed & device type
+  // Check device type
   const isMobile = window.innerWidth <= 768;
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  const isSlowConnection = connection && (connection.saveData || ['slow-2g', '2g', '3g'].includes(connection.effectiveType));
 
-  // If mobile or slow connection, do not load background video to preserve performance
-  if (isMobile || isSlowConnection) {
-    console.log('Mobile or slow connection detected. Keeping static fallback image.');
+  // If mobile, do not load background video to preserve performance
+  if (isMobile) {
+    console.log('Mobile device detected. Keeping static fallback image.');
     return;
   }
 
@@ -20,10 +18,31 @@ export function initBackgroundVideo(videoPath, fallbackImagePath) {
   const video = document.createElement('video');
   video.className = 'hero-video';
   video.autoplay = true;
-  video.loop = true;
   video.muted = true;
   video.playsInline = true;
   video.setAttribute('preload', 'auto');
+
+  const START_TIME = 15;
+  const LOOP_DURATION = 45;
+  const END_TIME = START_TIME + LOOP_DURATION;
+
+  // Seek to start time as soon as we can play
+  video.addEventListener('loadedmetadata', () => {
+    video.currentTime = START_TIME;
+  });
+
+  // Track loop boundaries
+  video.addEventListener('timeupdate', () => {
+    if (video.currentTime >= END_TIME) {
+      video.currentTime = START_TIME;
+    }
+  });
+
+  // Safety fallback if video is shorter than END_TIME
+  video.addEventListener('ended', () => {
+    video.currentTime = START_TIME;
+    video.play().catch(err => console.warn('Replay failed:', err));
+  });
 
   const source = document.createElement('source');
   source.src = videoPath;

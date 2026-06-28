@@ -12,7 +12,11 @@
   },
   "devDependencies": {
     "@sanity/client": "^7.23.0",
+    "@tailwindcss/vite": "^4.3.1",
+    "autoprefixer": "^10.5.2",
     "dotenv": "^17.4.2",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.1",
     "vite": "^5.2.11"
   }
 }

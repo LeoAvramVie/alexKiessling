@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{PAGE_TITLE}}</title>
+  <title>Startseite — Alex Kiessling</title>
   <meta name="description" content="Alex Kiessling is an Painting, Graphic, Sculpture to 3D, Video and Photography Artist from Vienna, Austria.">
   
   <!-- Local Font Preloads -->
-  <link rel="preload" href="{{PREFIX}}src/assets/fonts/cormorant-garamond-v16-latin-normal-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="{{PREFIX}}src/assets/fonts/cormorant-garamond-v16-latin-normal-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="{{PREFIX}}src/assets/fonts/space-grotesk-v16-latin-normal-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="{{PREFIX}}src/assets/fonts/space-grotesk-v16-latin-normal-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./src/assets/fonts/cormorant-garamond-v16-latin-normal-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./src/assets/fonts/cormorant-garamond-v16-latin-normal-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./src/assets/fonts/space-grotesk-v16-latin-normal-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./src/assets/fonts/space-grotesk-v16-latin-normal-700.woff2" as="font" type="font/woff2" crossorigin>
   
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="{{PREFIX}}src/css/style.css">
+  <link rel="stylesheet" href="./src/css/style.css">
 </head>
-<body>
+<body class="page-homepage">
 
   <!-- Ambient Artwork Watermarks (Parallax Glassmorphism backdrop) -->
   <div class="blob-bg">
-    <div class="bg-art bg-art-1" style="background-image: url('{{PREFIX}}assets/images/05_SHIFTs28_Neon_Acryliconcanvas_190x250cm_2019-scaled.jpg');"></div>
-    <div class="bg-art bg-art-2" style="background-image: url('{{PREFIX}}assets/images/04_REALzoon_politicon_Acryliconcanvas_200x200cm_2016-scaled.jpg');"></div>
-    <div class="bg-art bg-art-3" style="background-image: url('{{PREFIX}}assets/images/07_WATERShift_paul_watercolor_on_paper_framed_50x60cm_2014-scaled.jpg');"></div>
+    <div class="bg-art bg-art-1" style="background-image: url('./assets/images/05_SHIFTs28_Neon_Acryliconcanvas_190x250cm_2019-scaled.jpg');"></div>
+    <div class="bg-art bg-art-2" style="background-image: url('./assets/images/04_REALzoon_politicon_Acryliconcanvas_200x200cm_2016-scaled.jpg');"></div>
+    <div class="bg-art bg-art-3" style="background-image: url('./assets/images/07_WATERShift_paul_watercolor_on_paper_framed_50x60cm_2014-scaled.jpg');"></div>
   </div>
 
   <!-- Header Navigation -->
@@ -36,63 +36,63 @@
   </header>
 
   <nav class="nav">
-    <a href="{{PREFIX}}index.html" class="menu-logo-link" aria-label="Go to Homepage">
-      <img src="{{PREFIX}}assets/images/cropped-logoalex-1.png" alt="Alex Kiessling Emblem" class="menu-logo-img">
+    <a href="./index.html" class="menu-logo-link" aria-label="Go to Homepage">
+      <img src="./assets/images/cropped-logoalex-1.png" alt="Alex Kiessling Emblem" class="menu-logo-img">
     </a>
     <div class="nav-links">
-      <a href="{{PREFIX}}index.html" {{ACTIVE_HOME}}>
+      <a href="./index.html" class="active">
         <span class="lang-de">Home</span>
         <span class="lang-en">Home</span>
       </a>
-      <a href="{{PREFIX}}gallery/index.html" {{ACTIVE_GALLERY}}>
+      <a href="./gallery/index.html" >
         <span class="lang-de">Galerie</span>
         <span class="lang-en">Gallery</span>
       </a>
-      <a href="{{PREFIX}}projects/index.html" {{ACTIVE_PROJECTS}}>
+      <a href="./projects/index.html" >
         <span class="lang-de">Projekte</span>
         <span class="lang-en">Projects</span>
       </a>
-      <a href="{{PREFIX}}statement/index.html" {{ACTIVE_STATEMENT}}>
+      <a href="./statement/index.html" >
         <span class="lang-de">Statement</span>
         <span class="lang-en">Statement</span>
       </a>
-      <a href="{{PREFIX}}vita/index.html" {{ACTIVE_VITA}}>
+      <a href="./vita/index.html" >
         <span class="lang-de">Vita</span>
         <span class="lang-en">Vita</span>
       </a>
-      <a href="{{PREFIX}}alexkiesslingxgt/index.html" {{ACTIVE_ALEXKIESSLINGXGT}}>
+      <a href="./alexkiesslingxgt/index.html" >
         <span>NFT</span>
       </a>
     </div>
     
     <!-- Language Switcher -->
     <div class="lang-switcher">
-      <a href="{{LANG_DE_LINK}}" {{LANG_DE_ACTIVE}}>DE</a>
+      <a href="./" class="active">DE</a>
       <span class="lang-separator">|</span>
-      <a href="{{LANG_EN_LINK}}" {{LANG_EN_ACTIVE}}>EN</a>
+      <a href="./en/" >EN</a>
     </div>
 
     <!-- Social Links Icons -->
     <div class="drawer-socials">
-      <a href="{{INSTAGRAM_LINK}}" target="_blank" rel="noopener" aria-label="Instagram">
+      <a href="https://www.instagram.com/alexkiessling/" target="_blank" rel="noopener" aria-label="Instagram">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
         </svg>
       </a>
-      <a href="{{FACEBOOK_LINK}}" target="_blank" rel="noopener" aria-label="Facebook">
+      <a href="https://de-de.facebook.com/pages/category/Artist/ALEX-KIESSLING-236103737238/" target="_blank" rel="noopener" aria-label="Facebook">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
         </svg>
       </a>
-      <a href="{{YOUTUBE_LINK}}" target="_blank" rel="noopener" aria-label="YouTube">
+      <a href="https://www.youtube.com/user/alexkieszling" target="_blank" rel="noopener" aria-label="YouTube">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
           <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
         </svg>
       </a>
-      <a href="{{RARIBLE_LINK}}" target="_blank" rel="noopener" aria-label="Rarible (NFT)">
+      <a href="https://rarible.com/alexkiessling" target="_blank" rel="noopener" aria-label="Rarible (NFT)">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <polygon points="6 2 18 2 22 8 12 22 2 8 6 2"></polygon>
           <line x1="2" y1="8" x2="22" y2="8"></line>
@@ -104,7 +104,51 @@
 
   <!-- Main Content Viewport -->
   <main class="main-viewport">
-    <!-- CONTENT -->
+    <!-- Hero Section with Background Video Loop -->
+<section class="hero-section">
+  <div class="hero-video-container" data-video-src="/assets/videos/NEON-Alex-Kiessling.webm" data-fallback-src="./assets/images/05_SHIFTs28_Neon_Acryliconcanvas_190x250cm_2019-scaled.jpg">
+    <!-- fallback background set by JS, video injected by JS -->
+  </div>
+  <div class="hero-overlay-curtain"></div>
+  
+  <div class="hero-content-container">
+    <div class="hero-brand-card">
+      <!-- Circular Emblem Logo -->
+      <img src="./assets/images/cropped-logoalex-1.png" alt="Alex Kiessling Emblem" class="hero-emblem-img">
+      
+      <!-- Big Elegant Title (Typewriter-style sans-serif thin) -->
+      <h1 class="hero-title-elegant">Alex Kiessling</h1>
+      
+      <!-- Center Navigation Menu Link Row -->
+      <nav class="hero-center-nav">
+        <a href="./gallery/index.html">
+          <span class="lang-de">Galerie</span>
+          <span class="lang-en">Gallery</span>
+        </a>
+        <span class="nav-divider">|</span>
+        <a href="./projects/index.html">
+          <span class="lang-de">Projekte</span>
+          <span class="lang-en">Projects</span>
+        </a>
+        <span class="nav-divider">|</span>
+        <a href="./statement/index.html">
+          <span class="lang-de">Statement</span>
+          <span class="lang-en">Statement</span>
+        </a>
+        <span class="nav-divider">|</span>
+        <a href="./vita/index.html">
+          <span class="lang-de">Vita</span>
+          <span class="lang-en">Vita</span>
+        </a>
+        <span class="nav-divider">|</span>
+        <a href="./alexkiesslingxgt/index.html">
+          <span>NFT</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+</section>
+
   </main>
 
   <!-- Footer & Contact Cards -->
@@ -117,7 +161,7 @@
             <span class="lang-de">Kontakt</span>
             <span class="lang-en">Contact</span>
           </h4>
-          <a href="mailto:{{CONTACT_EMAIL}}" class="contact-email">{{CONTACT_EMAIL}}</a>
+          <a href="mailto:info@alexkiessling.com" class="contact-email">info@alexkiessling.com</a>
           <p class="contact-hint">
             <span class="lang-de">Für Preisanfragen und Studiobesuche kontaktieren Sie uns bitte direkt per E-Mail.</span>
             <span class="lang-en">For price inquiries and studio visits, please contact us directly via email.</span>
@@ -131,10 +175,10 @@
             <span class="lang-en">Follow</span>
           </h4>
           <div class="social-links-grid">
-            <a href="{{INSTAGRAM_LINK}}" target="_blank" rel="noopener">Instagram</a>
-            <a href="{{FACEBOOK_LINK}}" target="_blank" rel="noopener">Facebook</a>
-            <a href="{{YOUTUBE_LINK}}" target="_blank" rel="noopener">YouTube</a>
-            <a href="{{RARIBLE_LINK}}" target="_blank" rel="noopener">Rarible (NFT)</a>
+            <a href="https://www.instagram.com/alexkiessling/" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://de-de.facebook.com/pages/category/Artist/ALEX-KIESSLING-236103737238/" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.youtube.com/user/alexkieszling" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://rarible.com/alexkiessling" target="_blank" rel="noopener">Rarible (NFT)</a>
           </div>
         </div>
 
@@ -145,7 +189,7 @@
             <span class="lang-en">Legal</span>
           </h4>
           <div class="legal-links">
-            <a href="{{PREFIX}}privacy/index.html">
+            <a href="./privacy/index.html">
               <span class="lang-de">Datenschutz & Impressum</span>
               <span class="lang-en">Privacy & Imprint</span>
             </a>
@@ -157,6 +201,6 @@
   </footer>
 
   <!-- Frontend Logic Modules -->
-  <script type="module" src="{{PREFIX}}src/js/main.js"></script>
+  <script type="module" src="./src/js/main.js"></script>
 </body>
 </html>

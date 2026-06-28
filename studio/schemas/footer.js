@@ -7,7 +7,7 @@ export default {
       name: 'email',
       title: 'Kontakt-E-Mail',
       type: 'string',
-      initialValue: 'office@alexkiessling.com'
+      initialValue: 'info@alexkiessling.com'
     },
     {
       name: 'instagramUrl',

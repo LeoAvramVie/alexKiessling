@@ -12,7 +12,7 @@ const client = createClient({
   projectId,
   dataset,
   apiVersion: '2026-06-18',
-  useCdn: true
+  useCdn: false
 });
 
 // Helper to format block texts / newlines into HTML paragraphs
@@ -56,8 +56,10 @@ async function sync() {
       "homepage": *[_type == "homepage" && _id == "homepage"][0],
       "footer": *[_type == "footer" && _id == "footer"][0],
       "artworks": *[_type == "artwork"] | order(year desc, _createdAt desc),
-      "vita": *[_type == "vita"] | order(year desc),
-      "videos": *[_type == "video"]
+      "vitaHighlights": *[_type == "vitaHighlight"] | order(order asc),
+      "vitaEntries": *[_type == "vitaEntry"] | order(order asc),
+      "videos": *[_type == "video"],
+      "statements": *[_type == "statement"] | order(order asc)
     }`);
 
     if (result.homepage && result.footer) {
@@ -85,6 +87,7 @@ async function sync() {
   const pages = [
     { file: 'index.html', template: 'homepage', titleDe: 'Startseite', titleEn: 'Home' },
     { file: 'gallery/index.html', template: 'gallery', titleDe: 'Galerie', titleEn: 'Gallery' },
+    { file: 'projects/index.html', template: 'projects', titleDe: 'Projekte', titleEn: 'Projects' },
     { file: 'vita/index.html', template: 'vita', titleDe: 'Vita', titleEn: 'Vita' },
     { file: 'statement/index.html', template: 'statement', titleDe: 'Statement', titleEn: 'Statement' },
     { file: 'alexkiesslingxgt/index.html', template: 'gt', titleDe: 'alexkiesslingxGT', titleEn: 'alexkiesslingxGT' },
@@ -140,11 +143,10 @@ function compilePage(page, data, lang) {
   
   else if (page.template === 'gallery') {
     // Generate category tabs
-    const categories = ['All', 'Real', 'shifts1', 'shifts2', 'Headspins', 'Heads', 'water', 'print editions', 'Drawings', 'sculptures', 'long Distance Art'];
+    const categories = ['Real', 'shifts1', 'shifts2', 'Headspins', 'Heads', 'water', 'print editions', 'Drawings', 'sculptures', 'long Distance Art'];
     const tabsHtml = categories.map(cat => {
-      const displayCat = cat === 'All' ? (isEn ? 'All Works' : 'Alle Werke') : cat;
-      const activeClass = cat === 'All' ? 'class="active"' : '';
-      return `<button ${activeClass} data-filter="${cat}">${displayCat}</button>`;
+      const activeClass = cat === 'Real' ? 'class="active"' : '';
+      return `<button ${activeClass} data-filter="${cat}">${cat}</button>`;
     }).join('\n');
 
     // Generate artwork items grid
@@ -181,25 +183,138 @@ function compilePage(page, data, lang) {
   }
   
   else if (page.template === 'vita') {
-    const timelineHtml = data.vita.map(item => {
+    // A. Highlights (Top Slider)
+    const highlightsHtml = (data.vitaHighlights || []).map(item => {
+      const imgUrl = getImageUrl(item.image, 800);
       const desc = isEn ? (item.descriptionEn || item.descriptionDe) : (item.descriptionDe || item.descriptionEn);
+      const imageBlock = imgUrl ? `
+        <div class="slider-image-wrapper">
+          <img src="${imgUrl}" alt="${item.title}" loading="lazy">
+        </div>
+      ` : '';
       return `
-      <div class="timeline-row reveal-on-scroll">
-        <div class="timeline-year">${item.year}</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-body">
-          <h4 class="timeline-title">${item.title}</h4>
-          <p class="timeline-desc">${desc || ''}</p>
+      <div class="vita-slider-card">
+        <div class="slider-year-badge">${item.year}</div>
+        ${imageBlock}
+        <div class="slider-card-body">
+          <h3 class="slider-title">${item.title}</h3>
+          <p class="slider-desc">${desc || ''}</p>
         </div>
       </div>`;
     }).join('\n');
 
-    content = content.replace('{{TIMELINE}}', timelineHtml);
+    // B. Entries (Chronological list grouped by year)
+    const entriesHtml = (data.vitaEntries || []).map(item => {
+      const eventsList = (isEn ? item.eventsEn : item.eventsDe) || [];
+      const eventsLi = eventsList.map(ev => `<li>${ev}</li>`).join('\n');
+      return `
+      <div class="timeline-row reveal-on-scroll" data-year="${item.year}">
+        <div class="timeline-year">${item.year}</div>
+        <div class="timeline-body">
+          <ul class="timeline-events-list">
+            ${eventsLi}
+          </ul>
+        </div>
+      </div>`;
+    }).join('\n');
+
+    content = content
+        .replace('{{VITA_HIGHLIGHTS}}', highlightsHtml)
+        .replace('{{VITA_ENTRIES}}', entriesHtml);
   }
   
   else if (page.template === 'statement') {
-    const stmt = isEn ? data.homepage.statementEn : data.homepage.statementDe;
-    content = content.replace('{{STATEMENT}}', formatTextToHtml(stmt));
+    const statementsHtml = (data.statements || []).map(stmt => {
+      const text = isEn ? stmt.textEn : stmt.textDe;
+      const isLong = text.length > 500;
+      const imgUrl = getImageUrl(stmt.image, 600);
+      
+      const metaHtml = `
+        <div class="statement-meta-row">
+          <span class="statement-author">${stmt.author || ''}</span>
+          <h2 class="statement-item-title">${stmt.title || ''}</h2>
+        </div>
+      `;
+
+      let bodyHtml = '';
+      if (isLong) {
+        bodyHtml = `
+          <div class="statement-body-wrapper">
+            <div class="statement-body-text collapsible-content">
+              ${formatTextToHtml(text)}
+            </div>
+            <div class="fade-overlay"></div>
+            <button class="btn-read-more" aria-expanded="false">
+              <span class="lang-de label-more">Mehr lesen</span>
+              <span class="lang-en label-more">Read more</span>
+              <span class="lang-de label-less">Weniger anzeigen</span>
+              <span class="lang-en label-less">Read less</span>
+            </button>
+          </div>
+        `;
+      } else {
+        bodyHtml = `
+          <div class="statement-body-text">
+            ${formatTextToHtml(text)}
+          </div>
+        `;
+      }
+
+      if (imgUrl) {
+        return `
+        <div class="statement-item reveal-on-scroll has-image ${isLong ? 'collapsable' : ''}">
+          <div class="statement-image-col">
+            <div class="statement-image-wrapper">
+              <img src="${imgUrl}" alt="${stmt.title || ''}" class="statement-card-img" loading="lazy">
+            </div>
+          </div>
+          <div class="statement-content-col">
+            ${metaHtml}
+            ${bodyHtml}
+          </div>
+        </div>`;
+      } else {
+        return `
+        <div class="statement-item reveal-on-scroll ${isLong ? 'collapsable' : ''}">
+          ${metaHtml}
+          ${bodyHtml}
+        </div>`;
+      }
+    }).join('\n');
+    content = content.replace('{{STATEMENTS}}', statementsHtml);
+  }
+  
+  else if (page.template === 'projects') {
+    const ldaArtworks = (data.artworks || []).filter(art => 
+      art.category && art.category.toLowerCase() === 'long distance art'
+    );
+
+    const itemsHtml = ldaArtworks.map(art => {
+      const imgUrl = getImageUrl(art.image, 800);
+      const fullUrl = getImageUrl(art.image, 2000);
+      const title = art.title || 'Untitled';
+      const year = art.year || '2013';
+      const dim = art.dimensions || '';
+      const technique = isEn ? (art.techniqueEn || art.techniqueDe) : (art.techniqueDe || art.techniqueEn);
+      const inSituUrls = (art.inSituImages || []).map(img => getImageUrl(img, 1600)).join(',');
+      
+      return `
+      <div class="gallery-item-card reveal-on-scroll" data-category="${art.category || 'long Distance Art'}" data-year="${year}" data-dimensions="${dim}" data-technique="${technique}" data-insitu="${inSituUrls}" data-full="${fullUrl}">
+        <div class="gallery-image-wrapper">
+          <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
+          <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
+          <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
+          <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy">
+          <div class="mobile-lens-indicator"></div>
+        </div>
+        <div class="gallery-item-label">
+          <div class="label-title">${title}</div>
+          <div class="label-meta">${year} — ${technique} — ${dim}</div>
+        </div>
+      </div>`;
+    }).join('\n');
+
+    content = content.replace('{{LONG_DISTANCE_ART_GRID}}', itemsHtml);
   }
   
   else if (page.template === 'gt') {
@@ -221,13 +336,16 @@ function compilePage(page, data, lang) {
   // 2. Assemble Layout
   let htmlResult = layout
       .replace('<!-- CONTENT -->', content)
+      .replace('<body>', `<body class="${page.template === 'homepage' ? 'page-homepage' : 'page-subpage'}">`)
       .replace('<html lang="de">', `<html lang="${lang}">`)
       .replace('{{PAGE_TITLE}}', isEn ? `${page.titleEn} — Alex Kiessling` : `${page.titleDe} — Alex Kiessling`)
       .replace(/\{\{PREFIX\}\}/g, prefix);
 
   // 3. Process Header Toggles (Active states and DE/EN redirects)
   const menuLinks = [
+    { key: 'home', path: 'index.html' },
     { key: 'gallery', path: 'gallery/' },
+    { key: 'projects', path: 'projects/' },
     { key: 'vita', path: 'vita/' },
     { key: 'statement', path: 'statement/' },
     { key: 'alexkiesslingxgt', path: 'alexkiesslingxgt/' }
@@ -249,13 +367,12 @@ function compilePage(page, data, lang) {
     htmlResult = htmlResult.replace(`{{ACTIVE_${link.key.toUpperCase()}}}`, isActive ? 'class="active"' : '');
   });
 
-  // 4. Footer contact & copyright info replacement
   htmlResult = htmlResult
-      .replace('{{CONTACT_EMAIL}}', data.footer.email || 'office@alexkiessling.com')
-      .replace('{{INSTAGRAM_LINK}}', data.footer.instagramUrl || 'https://www.instagram.com/alexkiessling/')
-      .replace('{{FACEBOOK_LINK}}', data.footer.facebookUrl || 'https://de-de.facebook.com/pages/category/Artist/ALEX-KIESSLING-236103737238/')
-      .replace('{{YOUTUBE_LINK}}', data.footer.youtubeChannelUrl || 'https://www.youtube.com/user/alexkieszling')
-      .replace('{{RARIBLE_LINK}}', data.footer.raribleUrl || 'https://rarible.com/alexkiessling');
+      .replace(/{{CONTACT_EMAIL}}/g, data.footer.email || 'info@alexkiessling.com')
+      .replace(/{{INSTAGRAM_LINK}}/g, data.footer.instagramUrl || 'https://www.instagram.com/alexkiessling/')
+      .replace(/{{FACEBOOK_LINK}}/g, data.footer.facebookUrl || 'https://de-de.facebook.com/pages/category/Artist/ALEX-KIESSLING-236103737238/')
+      .replace(/{{YOUTUBE_LINK}}/g, data.footer.youtubeChannelUrl || 'https://www.youtube.com/user/alexkieszling')
+      .replace(/{{RARIBLE_LINK}}/g, data.footer.raribleUrl || 'https://rarible.com/alexkiessling');
 
   writeFileSync(destPath, htmlResult, 'utf-8');
   console.log(`✅ File written: ${destPath}`);

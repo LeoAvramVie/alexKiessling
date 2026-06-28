@@ -14,22 +14,27 @@ export function initGallery() {
       cards.forEach(card => {
         const category = card.getAttribute('data-category');
         if (filterValue === 'All' || category === filterValue) {
-          card.style.display = 'block';
-          // Force layout recalculation for fade in
-          setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }, 50);
+          card.classList.remove('hidden');
         } else {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(20px)';
-          setTimeout(() => {
-            card.style.display = 'none';
-          }, 300);
+          card.classList.add('hidden');
         }
       });
     });
   });
+
+  // Apply initial filter based on active tab on page load
+  const initialActiveTab = document.querySelector('.filter-tabs-container button.active');
+  if (initialActiveTab) {
+    const filterValue = initialActiveTab.getAttribute('data-filter');
+    cards.forEach(card => {
+      const category = card.getAttribute('data-category');
+      if (category === filterValue) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
 
   // --- 2. DESKTOP RGB SHIFT OVERLAYS ---
   cards.forEach(card => {

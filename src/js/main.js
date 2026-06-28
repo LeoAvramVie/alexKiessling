@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     burgerBtn.addEventListener('click', () => {
       const isOpen = burgerBtn.classList.toggle('open');
       nav.classList.toggle('open', isOpen);
+      document.body.classList.toggle('menu-open', isOpen);
     });
   }
 
@@ -47,4 +48,29 @@ document.addEventListener('DOMContentLoaded', () => {
   if (gallerySection) {
     initGallery();
   }
+
+  // --- 5. PARALLAX EFFECT FOR ART BACKGROUNDS ---
+  const art1 = document.querySelector('.bg-art-1');
+  const art2 = document.querySelector('.bg-art-2');
+  const art3 = document.querySelector('.bg-art-3');
+  
+  if (art1 || art2 || art3) {
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (art1) art1.style.transform = `translateY(${scrollY * 0.15}px) rotate(${scrollY * 0.01}deg)`;
+      if (art2) art2.style.transform = `translateY(${scrollY * -0.1}px) rotate(${scrollY * -0.005}deg)`;
+      if (art3) art3.style.transform = `translateY(${scrollY * 0.05}px)`;
+    });
+  }
+  // --- 6. READ MORE / COLLAPSE STATEMENTS TOGGLE ---
+  const readMoreButtons = document.querySelectorAll('.btn-read-more');
+  readMoreButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.statement-item');
+      if (card) {
+        const isExpanded = card.classList.toggle('expanded');
+        btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      }
+    });
+  });
 });

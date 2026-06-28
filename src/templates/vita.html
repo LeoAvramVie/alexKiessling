@@ -1,5 +1,5 @@
-<section class="vita-page-section container">
-  <div class="page-header">
+<section class="vita-page-section">
+  <div class="vita-header container">
     <h1 class="page-title reveal-on-scroll">Vita</h1>
     <p class="vita-intro reveal-on-scroll">
       <span class="lang-de">Ein Überblick über Ausstellungen, Performances und Meilensteine im Werdegang von Alex Kiessling.</span>
@@ -7,10 +7,23 @@
     </p>
   </div>
 
-  <div class="white-cube-divider"></div>
+  <!-- Highlights Section (Horizontal Scroll Slider) -->
+  <div class="vita-highlights-viewport reveal-on-scroll">
+    <div class="vita-slider-track">
+      {{VITA_HIGHLIGHTS}}
+    </div>
+  </div>
 
-  <!-- Timeline (compiled dynamically) -->
-  <div class="timeline-container">
-    {{TIMELINE}}
+  <div class="white-cube-divider container"></div>
+
+  <!-- Detailed chronological timeline list -->
+  <div class="timeline-container container">
+    <h2 class="section-subtitle reveal-on-scroll" style="margin-bottom: var(--spacing-lg);">
+      <span class="lang-de">Ausstellungsverzeichnis</span>
+      <span class="lang-en">Exhibition Record</span>
+    </h2>
+    <div class="detailed-timeline-list">
+      {{VITA_ENTRIES}}
+    </div>
   </div>
 </section>
