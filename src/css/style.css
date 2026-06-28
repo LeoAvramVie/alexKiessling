@@ -1336,11 +1336,30 @@ body.menu-open .header {
   letter-spacing: 0.05em;
   color: var(--text-ink);
   min-width: 80px;
-  padding-top: 1px;
+  padding-top: 1.2rem; /* Aligns with card top padding */
 }
 
 .timeline-body {
   flex: 1;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--card-radius);
+  box-shadow: 0 8px 30px rgba(22, 22, 21, 0.015);
+  transition: 
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.timeline-row:hover .timeline-body {
+  background: var(--glass-bg-hover);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 16px 36px rgba(22, 22, 21, 0.04);
+  transform: translateY(-4px);
 }
 
 .timeline-events-list {
@@ -1389,6 +1408,10 @@ body.menu-open .header {
   }
   .timeline-year {
     min-width: auto;
+    padding-top: 0 !important;
+  }
+  .timeline-body {
+    padding: 0.8rem 1rem !important;
   }
 }
 
