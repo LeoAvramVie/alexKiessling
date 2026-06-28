@@ -1786,25 +1786,7 @@ body.menu-open .header {
   margin: 0;
 }
 
-.footer-author-sep {
-  margin: 0 0.4rem;
-  color: var(--border-light);
-}
-
-.author-link {
-  color: var(--text-slate);
-  text-decoration: none;
-  transition: var(--transition-smooth);
-  border-bottom: 1px dashed transparent;
-  font-weight: 500;
-}
-
-.author-link:hover {
-  color: var(--text-ink);
-  border-bottom-color: var(--text-ink);
-}
-
-.footer-right {
+.footer-center {
   display: flex;
   align-items: center;
   gap: 1.2rem;
@@ -1829,6 +1811,31 @@ body.menu-open .header {
 .footer-divider {
   color: var(--border-light);
   font-size: 0.8rem;
+}
+
+.footer-credit {
+  font-family: var(--font-headings);
+  font-size: 0.72rem;
+  color: var(--text-slate);
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+}
+
+.footer-credit:hover {
+  opacity: 0.9;
+}
+
+.author-link {
+  color: var(--text-slate);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+  border-bottom: 1px dashed transparent;
+}
+
+.author-link:hover {
+  color: var(--text-ink);
+  border-bottom-color: var(--text-ink);
 }
 
 /* --- 15. LIGHTBOX GLASS COCKPIT --- */
@@ -2381,14 +2388,25 @@ body.menu-open .header {
     padding: 1rem 0 !important;
   }
   .footer-content {
+    display: flex !important;
     flex-direction: column !important;
-    gap: 0.5rem !important;
+    gap: 0.6rem !important;
     text-align: center !important;
   }
-  .footer-right {
+  .footer-center {
+    order: 1 !important;
     flex-direction: column !important;
     gap: 0.4rem !important;
     width: 100% !important;
+    display: flex !important;
+  }
+  .footer-left {
+    order: 2 !important;
+  }
+  .footer-credit {
+    order: 3 !important;
+    font-size: 0.7rem !important;
+    margin-top: 0.1rem !important;
   }
   .footer-divider {
     display: none !important;
@@ -2401,9 +2419,6 @@ body.menu-open .header {
     font-size: 0.78rem !important;
   }
 
-  .footer-block.block-legal {
-    grid-column: span 1;
-  }
 
   .lightbox-modal {
     position: fixed !important;
