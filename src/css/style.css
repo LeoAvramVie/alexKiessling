@@ -2219,29 +2219,35 @@ body.menu-open .header {
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
-    padding: clamp(2rem, 6vh, 6rem) 2rem !important;
+    padding: clamp(1rem, 3.5vh, 2.5rem) 2rem !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: clamp(1rem, 2.5vh, 3rem) !important;
+    gap: clamp(0.5rem, 1.8vh, 1.4rem) !important;
     overflow: hidden !important;
     transform: none !important; /* Reset scale/translate transforms on mobile */
   }
 
   .menu-logo-link {
-    margin-bottom: clamp(0.5rem, 1.5vh, 1.5rem);
+    margin-bottom: 0 !important;
     align-self: center; /* Center logo horizontally */
+    height: 48px !important;
+  }
+
+  .menu-logo-img {
+    height: 44px !important;
+    width: 44px !important;
   }
 
   .nav-links {
     align-items: center; /* Center links horizontally on mobile */
-    gap: clamp(1rem, 3.2vh, 2.2rem); /* Dynamic gap based on screen height */
+    gap: clamp(0.4rem, 1.6vh, 0.9rem) !important; /* Dynamic gap based on screen height */
   }
 
   .nav-links a {
-    font-size: clamp(1.25rem, 3.8vh, 1.9rem); /* Dynamic font sizing on mobile */
-    padding: 0.3rem 0;
+    font-size: clamp(1.1rem, 2.8vh, 1.45rem) !important; /* Dynamic font sizing on mobile */
+    padding: 0.15rem 0 !important;
   }
 
   .nav-links a:hover,
@@ -2251,8 +2257,8 @@ body.menu-open .header {
   }
 
   .lang-switcher {
-    font-size: 1rem;
-    margin-top: clamp(1rem, 3.5vh, 2.5rem);
+    font-size: 0.9rem !important;
+    margin-top: clamp(0.4rem, 1.6vh, 1rem) !important;
     padding-top: 0;
     border-top: none; /* Clean layout without separating border on mobile */
     justify-content: center; /* Center switcher on mobile */
@@ -2260,7 +2266,7 @@ body.menu-open .header {
   }
 
   .drawer-socials {
-    margin-top: clamp(0.5rem, 1.5vh, 1.5rem);
+    margin-top: 0 !important;
     justify-content: center; /* Center social icons on mobile */
     width: auto;
   }
