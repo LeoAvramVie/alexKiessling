@@ -2381,7 +2381,7 @@ body.menu-open .header {
   }
 
   .lightbox-image-panel {
-    height: 60% !important;
+    height: 70% !important;
     min-height: auto !important;
     padding: 2.2rem 1rem 0.5rem 1rem !important;
     border-right: none !important;
@@ -2402,7 +2402,7 @@ body.menu-open .header {
   .lightbox-details-sidebar {
     position: static !important;
     width: 100% !important;
-    height: 40% !important;
+    height: 30% !important;
     transform: none !important;
     background: #ffffff !important;
     border-top: 1px solid var(--border-light) !important;

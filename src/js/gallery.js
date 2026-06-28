@@ -120,10 +120,6 @@ export function initGallery() {
   const lightboxMedium = lightbox.querySelector('.val-medium');
   const lightboxDim = lightbox.querySelector('.val-dimensions');
   const closeBtn = lightbox.querySelector('.lightbox-close-btn');
-  const scaleToggle = lightbox.querySelector('.scale-toggle-btn');
-  const scaleContainer = lightbox.querySelector('.scale-visualizer-container');
-  const vectorCanvas = lightbox.querySelector('.vector-artwork-canvas');
-  const vectorLabel = lightbox.querySelector('.vector-artwork-label');
   const lens = lightbox.querySelector('.lightbox-lens-loupe');
 
   let activeCard = null;
@@ -178,39 +174,6 @@ export function initGallery() {
       lightboxMedium.textContent = cleanMedium;
       lightboxDim.textContent = finalDim;
 
-      // Reset Scale Widget State
-      scaleContainer.classList.remove('visible');
-      scaleToggle.classList.remove('active');
-
-      // Setup Scale Visualizer values
-      // Dimensions format example: "140x140cm" or "200x230cm"
-      let widthCm = 100;
-      let heightCm = 100;
-      const dimMatch = finalDim ? finalDim.match(/(\d+)\s*[xX]\s*(\d+)/) : null;
-      if (dimMatch) {
-        widthCm = parseInt(dimMatch[1]);
-        heightCm = parseInt(dimMatch[2]);
-      }
-
-      // Dynamic scale factor to prevent overflowing the 200px stage height.
-      // Silhouette height is 175cm. We want both silhouette and artwork to fit within 160px max height.
-      const maxHeightCm = Math.max(175, heightCm);
-      const scaleFactor = 160 / maxHeightCm;
-
-      // Update silhouette height dynamically
-      const vectorSilhouette = lightbox.querySelector('.vector-silhouette');
-      if (vectorSilhouette) {
-        vectorSilhouette.style.height = `${175 * scaleFactor}px`;
-      }
-
-      // Set canvas size dynamically
-      vectorCanvas.style.width = `${widthCm * scaleFactor}px`;
-      vectorCanvas.style.height = `${heightCm * scaleFactor}px`;
-      vectorCanvas.style.backgroundImage = `url('${fullImgUrl}')`;
-      vectorCanvas.style.backgroundSize = 'cover';
-      vectorCanvas.style.backgroundPosition = 'center';
-      vectorLabel.textContent = `${widthCm}x${heightCm} cm`;
-
       // Open lightbox
       lightbox.classList.add('open');
       lightbox.setAttribute('aria-hidden', 'false');
@@ -243,21 +206,7 @@ export function initGallery() {
     }
   });
 
-  // Toggle Scale Widget
-  scaleToggle.addEventListener('click', () => {
-    const active = scaleToggle.classList.toggle('active');
-    scaleContainer.classList.toggle('visible', active);
-  });
 
-  // Close Scale Widget inside overlay
-  const scaleCloseBtn = lightbox.querySelector('.scale-close-btn');
-  if (scaleCloseBtn) {
-    scaleCloseBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      scaleContainer.classList.remove('visible');
-      scaleToggle.classList.remove('active');
-    });
-  }
 
   // Expand mobile bottom sheet on touch drag
   const sidebar = lightbox.querySelector('.lightbox-details-sidebar');
