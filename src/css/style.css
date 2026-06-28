@@ -176,8 +176,8 @@ body.lightbox-open {
   position: absolute;
   background-size: cover;
   background-position: center;
-  filter: blur(5px) saturate(90%);
-  opacity: 0.08;
+  filter: blur(3px) saturate(95%);
+  opacity: 0.14;
   border-radius: 60px;
   pointer-events: none;
   transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -980,33 +980,127 @@ body.menu-open .header {
   margin-bottom: var(--spacing-lg);
 }
 
+.vita-highlights-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: var(--spacing-xl);
+  display: flex;
+  align-items: center;
+}
+
+/* Edge shadow fades to indicate horizontal scrollable content */
+.vita-highlights-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(90deg, var(--bg-sand) 0%, rgba(250, 249, 246, 0) 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.vita-highlights-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(-90deg, var(--bg-sand) 0%, rgba(250, 249, 246, 0) 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+
 .vita-highlights-viewport {
   width: 100%;
   overflow-x: auto;
-  padding: var(--spacing-md) 0;
-  display: flex;
-  margin-bottom: var(--spacing-lg);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(22, 22, 21, 0.15) transparent;
+  padding: var(--spacing-lg) 0;
+  scrollbar-width: none; /* Hide standard scrollbar for custom design */
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
 }
 
 .vita-highlights-viewport::-webkit-scrollbar {
-  height: 5px;
-}
-
-.vita-highlights-viewport::-webkit-scrollbar-thumb {
-  background: rgba(22, 22, 21, 0.15);
-  border-radius: 4px;
-}
-
-.vita-highlights-viewport::-webkit-scrollbar-track {
-  background: transparent;
+  display: none;
 }
 
 .vita-slider-track {
   display: flex;
-  gap: var(--spacing-md);
-  padding: 0 var(--spacing-md) var(--spacing-sm) var(--spacing-md);
+  gap: 2.5rem;
+  padding: 0 10% var(--spacing-sm) 10%;
+  position: relative;
+}
+
+/* Horizontal connecting timeline line */
+.vita-slider-track::before {
+  content: '';
+  position: absolute;
+  top: 40px; /* Aligns with year badges */
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    rgba(22, 22, 21, 0) 0%, 
+    rgba(22, 22, 21, 0.12) 10%, 
+    rgba(22, 22, 21, 0.12) 90%, 
+    rgba(22, 22, 21, 0) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Glassmorphic Navigation Arrows */
+.slider-arrow {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(22, 22, 21, 0.08);
+  color: var(--text-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast) ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  opacity: 0.85;
+}
+
+.slider-arrow:hover {
+  background: rgba(255, 255, 255, 0.95);
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(22, 22, 21, 0.08);
+  border-color: rgba(22, 22, 21, 0.18);
+}
+
+.slider-arrow.arrow-left {
+  left: 2rem;
+}
+
+.slider-arrow.arrow-right {
+  right: 2rem;
+}
+
+/* Hide arrows on mobile touch devices where swiping is natural */
+@media (max-width: 768px) {
+  .slider-arrow {
+    display: none;
+  }
+  .vita-highlights-container::before,
+  .vita-highlights-container::after {
+    width: 40px; /* Thinner fades on mobile */
+  }
+  .vita-slider-track {
+    padding: 0 var(--spacing-md) var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-md);
+  }
 }
 
 .vita-slider-card {

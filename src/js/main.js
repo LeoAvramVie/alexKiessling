@@ -73,4 +73,49 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // --- 7. VITA TIMELINE SLIDER CONTROLS ---
+  const sliderContainer = document.querySelector('.vita-highlights-container');
+  if (sliderContainer) {
+    const viewport = sliderContainer.querySelector('.vita-highlights-viewport');
+    const btnLeft = sliderContainer.querySelector('.arrow-left');
+    const btnRight = sliderContainer.querySelector('.arrow-right');
+
+    if (viewport && btnLeft && btnRight) {
+      const scrollStep = 360;
+
+      btnLeft.addEventListener('click', () => {
+        viewport.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+      });
+
+      btnRight.addEventListener('click', () => {
+        viewport.scrollBy({ left: scrollStep, behavior: 'smooth' });
+      });
+
+      const updateArrowVisibility = () => {
+        const scrollLeft = viewport.scrollLeft;
+        const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+        
+        if (scrollLeft <= 5) {
+          btnLeft.style.opacity = '0';
+          btnLeft.style.pointerEvents = 'none';
+        } else {
+          btnLeft.style.opacity = '0.85';
+          btnLeft.style.pointerEvents = 'auto';
+        }
+
+        if (scrollLeft >= maxScroll - 5) {
+          btnRight.style.opacity = '0';
+          btnRight.style.pointerEvents = 'none';
+        } else {
+          btnRight.style.opacity = '0.85';
+          btnRight.style.pointerEvents = 'auto';
+        }
+      };
+
+      viewport.addEventListener('scroll', updateArrowVisibility);
+      setTimeout(updateArrowVisibility, 300);
+      window.addEventListener('resize', updateArrowVisibility);
+    }
+  }
 });

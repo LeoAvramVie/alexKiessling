@@ -8,10 +8,24 @@
   </div>
 
   <!-- Highlights Section (Horizontal Scroll Slider) -->
-  <div class="vita-highlights-viewport reveal-on-scroll">
-    <div class="vita-slider-track">
-      {{VITA_HIGHLIGHTS}}
+  <div class="vita-highlights-container reveal-on-scroll">
+    <button class="slider-arrow arrow-left" aria-label="Vorheriges Highlight">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    
+    <div class="vita-highlights-viewport">
+      <div class="vita-slider-track">
+        {{VITA_HIGHLIGHTS}}
+      </div>
     </div>
+    
+    <button class="slider-arrow arrow-right" aria-label="Nächstes Highlight">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
   </div>
 
   <div class="white-cube-divider container"></div>
