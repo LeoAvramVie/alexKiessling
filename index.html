@@ -228,6 +228,51 @@
     </div>
   </footer>
 
+  <!-- Lightbox Modal Viewport (Global for all subpages) -->
+  <div class="lightbox-modal" aria-hidden="true" role="dialog">
+    <button class="lightbox-close-btn" aria-label="Close Lightbox">&times;</button>
+    
+    <div class="lightbox-content-wrapper">
+      <!-- Image Panel -->
+      <div class="lightbox-image-panel">
+        <div class="lightbox-main-view">
+          <img class="lightbox-active-img" src="" alt="">
+          <!-- Lens magnification loupe on mobile/touch -->
+          <div class="lightbox-lens-loupe"></div>
+        </div>
+        
+        <!-- In-Situ Carousel Dots -->
+        <div class="lightbox-carousel-controls">
+          <button class="carousel-dot active" data-index="0"></button>
+        </div>
+      </div>
+
+      <!-- Details Sidebar -->
+      <div class="lightbox-details-sidebar">
+        <h3 class="lightbox-title">Artwork Title</h3>
+        
+        <!-- Technical specs labels (technical monospace style) -->
+        <div class="lightbox-spec-sheet">
+          <div class="spec-row">
+            <span class="spec-label">Year:</span>
+            <span class="spec-val val-year">2025</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Medium:</span>
+            <span class="spec-val val-medium">Acrylic on Canvas</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Dimensions:</span>
+            <span class="spec-val val-dimensions">140x140cm</span>
+          </div>
+        </div>
+
+        <div class="lightbox-divider"></div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Frontend Logic Modules -->
   <script type="module" src="./src/js/main.js"></script>
 </body>

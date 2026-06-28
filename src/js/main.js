@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- 4. EXPOSITIONS GALERIE INITIALISIEREN ---
-  const gallerySection = document.querySelector('.gallery-page-section');
-  if (gallerySection) {
+  const hasGalleryCards = document.querySelector('.gallery-item-card');
+  if (hasGalleryCards) {
     initGallery();
   }
 
