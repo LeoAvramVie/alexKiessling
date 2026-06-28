@@ -2754,3 +2754,74 @@ body.menu-open .header {
     padding: 3rem 1.5rem 1.5rem 1.5rem !important; /* Top padding to make room for close button */
   }
 }
+
+/* --- 17. SCROLL TO TOP BUTTON --- */
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  color: var(--text-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.9);
+  transition: 
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.3s ease,
+    border-color 0.3s ease;
+  box-shadow: 0 8px 24px rgba(22, 22, 21, 0.05);
+}
+
+.scroll-to-top-btn.visible {
+  opacity: 0.9;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.scroll-to-top-btn:hover {
+  opacity: 1;
+  background: var(--glass-bg-hover);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 12px 30px rgba(22, 22, 21, 0.1);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.scroll-to-top-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.arrow-up-svg {
+  width: 1.3rem;
+  height: 1.3rem;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-to-top-btn:hover .arrow-up-svg {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .scroll-to-top-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    box-shadow: 0 6px 18px rgba(22, 22, 21, 0.08);
+  }
+  .arrow-up-svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+}
