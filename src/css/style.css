@@ -933,11 +933,12 @@ body.menu-open .header {
 
 /* Glass Cards */
 .gallery-item-card {
-  display: block;
+  display: inline-block;
   width: 100%;
   margin-bottom: var(--spacing-md);
   break-inside: avoid;
   -webkit-column-break-inside: avoid;
+  will-change: transform;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);

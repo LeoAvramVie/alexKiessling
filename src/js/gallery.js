@@ -328,4 +328,24 @@ export function initGallery() {
     lightboxImg.style.transform = `translate3d(${clampedX}px, ${clampedY}px, 0px) scale(1.03)`;
     lightboxImg.style.transition = 'transform 0.1s ease-out';
   }
+
+  // --- 8. LOAD EVENT REFLOW FOR MASONRY HEIGHTS ---
+  const triggerFinalReflow = () => {
+    const gridEl = document.querySelector('.gallery-masonry-grid');
+    if (gridEl) {
+      requestAnimationFrame(() => {
+        gridEl.style.columnGap = '0.74rem';
+        gridEl.offsetHeight; // trigger reflow
+        requestAnimationFrame(() => {
+          gridEl.style.columnGap = '';
+        });
+      });
+    }
+  };
+
+  if (document.readyState === 'complete') {
+    triggerFinalReflow();
+  } else {
+    window.addEventListener('load', triggerFinalReflow);
+  }
 }
