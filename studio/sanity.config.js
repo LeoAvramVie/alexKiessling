@@ -24,10 +24,6 @@ export default defineConfig({
                     .id('homepage')
                     .child(S.document().schemaType('homepage').documentId('homepage')),
                 S.listItem()
-                    .title('Katalog & Werke (Artworks)')
-                    .id('artwork')
-                    .child(S.documentTypeList('artwork').title('Alle Werke')),
-                S.listItem()
                     .title('Galerie Kategorien (Zyklen)')
                     .id('category')
                     .child(S.documentTypeList('category').title('Alle Kategorien')),

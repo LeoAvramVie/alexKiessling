@@ -32,11 +32,75 @@ export default {
       type: 'array',
       of: [
         {
-          type: 'reference',
-          to: [{ type: 'artwork' }]
+          type: 'object',
+          name: 'artworkInline',
+          title: 'Werk',
+          fields: [
+            {
+              name: 'title',
+              title: 'Titel',
+              type: 'string',
+              validation: Rule => Rule.required()
+            },
+            {
+              name: 'year',
+              title: 'Jahr',
+              type: 'string',
+              validation: Rule => Rule.required()
+            },
+            {
+              name: 'dimensions',
+              title: 'Abmessungen',
+              type: 'string',
+              description: 'Z.B. 140x140cm'
+            },
+            {
+              name: 'techniqueDe',
+              title: 'Technik (DE)',
+              type: 'string',
+              description: 'Z.B. Acryl auf Leinwand'
+            },
+            {
+              name: 'techniqueEn',
+              title: 'Technik (EN)',
+              type: 'string',
+              description: 'Z.B. Acrylic on Canvas'
+            },
+            {
+              name: 'image',
+              title: 'Hauptbild',
+              type: 'image',
+              options: { hotspot: true },
+              validation: Rule => Rule.required()
+            },
+            {
+              name: 'inSituImages',
+              title: 'Raumansichten / Detailbilder (In-Situ)',
+              type: 'array',
+              of: [{ type: 'image' }],
+              description: 'Fotos des Werkes aufgehängt in einer Galerie oder Detailaufnahmen.'
+            },
+            {
+              name: 'descriptionDe',
+              title: 'Beschreibung (DE)',
+              type: 'text'
+            },
+            {
+              name: 'descriptionEn',
+              title: 'Beschreibung (EN)',
+              type: 'text'
+            }
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'year',
+              media: 'image'
+            }
+          }
         }
       ],
-      description: 'Ziehe die Werke hier hinein und ordne sie per Drag & Drop an.'
+      description: 'Füge hier alle Werke für diese Kategorie hinzu und ordne sie per Drag & Drop.'
     }
   ],
   preview: {

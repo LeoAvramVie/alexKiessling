@@ -64,8 +64,16 @@ async function sync() {
         title,
         "slug": slug.current,
         order,
-        artworks[]->{
-          ...
+        artworks[] {
+          title,
+          year,
+          dimensions,
+          techniqueDe,
+          techniqueEn,
+          "image": image.asset->url,
+          "inSituImages": inSituImages[].asset->url,
+          descriptionDe,
+          descriptionEn
         }
       },
       "vitaHighlights": *[_type == "vitaHighlight"] | order(order asc),
