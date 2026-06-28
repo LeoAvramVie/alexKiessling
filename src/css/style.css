@@ -108,8 +108,8 @@
   --text-slate: #6e6b66;
   --border-light: rgba(22, 22, 21, 0.08);
 
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Space Grotesk', -apple-system, sans-serif;
+  --font-serif: 'Roboto', -apple-system, sans-serif;
+  --font-sans: 'Roboto', -apple-system, sans-serif;
   --font-headings: 'Roboto', -apple-system, sans-serif;
   --font-mono: monospace;
 
