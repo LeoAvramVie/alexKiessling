@@ -708,7 +708,7 @@ body.menu-open .header {
     color: #000000 !important;
     letter-spacing: 0.22em !important;
     margin-top: 1.5rem !important;
-    margin-bottom: 2rem !important;
+    margin-bottom: 0.6rem !important;
     text-align: center !important;
     text-transform: uppercase !important;
   }
@@ -724,34 +724,34 @@ body.menu-open .header {
     align-items: center !important;
     gap: 0.25rem !important;
     width: 100% !important;
-    margin-top: 1.5rem !important;
+    margin-top: 0.6rem !important;
   }
   .hero-center-nav a {
     font-size: 0.72rem !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
     color: #000000 !important;
-    opacity: 0.8 !important;
+    opacity: 1 !important;
     letter-spacing: 0.05em !important;
     padding: 0 !important;
     background: none !important;
     border: none !important;
     box-shadow: none !important;
-    text-transform: capitalize !important;
+    text-transform: uppercase !important;
     transition: opacity 0.2s ease !important;
   }
   .hero-center-nav a:hover,
   .hero-center-nav a:active {
-    opacity: 1 !important;
+    opacity: 0.7 !important;
   }
   .nav-divider {
     display: inline-block !important;
     font-size: 0.72rem !important;
     color: #000000 !important;
-    opacity: 0.4 !important;
+    opacity: 0.7 !important;
     margin: 0 0.15rem !important;
   }
   .hero-overlay-curtain {
-    background: rgba(255, 255, 255, 0.45) !important;
+    background: rgba(255, 255, 255, 0.7) !important;
   }
 }
 
@@ -1907,6 +1907,9 @@ body.menu-open .header {
   line-height: 1.25;
   color: var(--text-ink);
   margin-bottom: var(--spacing-md);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .lightbox-spec-sheet {
@@ -2362,7 +2365,7 @@ body.menu-open .header {
   }
 
   .lightbox-image-panel {
-    height: 60vh !important;
+    height: 60% !important;
     min-height: auto !important;
     padding: 4rem 1rem 1rem 1rem !important;
     border-right: none !important;
@@ -2382,7 +2385,7 @@ body.menu-open .header {
   .lightbox-details-sidebar {
     position: static !important;
     width: 100% !important;
-    height: 40vh !important;
+    height: 40% !important;
     transform: none !important;
     background: #ffffff !important;
     border-top: 1px solid var(--border-light) !important;
@@ -2407,7 +2410,7 @@ body.menu-open .header {
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 60vh !important;
+    height: 60% !important;
     background: rgba(250, 249, 246, 0.98) !important;
     z-index: 100 !important;
     display: flex !important;

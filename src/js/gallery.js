@@ -125,12 +125,20 @@ export function initGallery() {
       let finalYear = 'TBA';
       let finalDim = 'TBA';
 
+      const isPlaceholder = (val) => {
+        if (!val) return true;
+        const s = val.toLowerCase().trim();
+        return s === '' || s === 'k.a.' || s === 'undefined' || s === 'null' || s === 'tba' || s === 'tbd';
+      };
+
+      const cleanMedium = isPlaceholder(medium) ? 'TBA' : medium.trim();
+
       // 1. Parse Year: look for 4 digits (from 1980 to 2030)
       const yearRegex = /\b(19[89]\d|20[0-2]\d)\b/;
       const titleYearMatch = title.match(yearRegex);
       if (titleYearMatch) {
         finalYear = titleYearMatch[1];
-      } else if (rawYear && rawYear.trim()) {
+      } else if (!isPlaceholder(rawYear)) {
         const rawYearMatch = rawYear.match(yearRegex);
         finalYear = rawYearMatch ? rawYearMatch[1] : rawYear.trim();
       }
@@ -140,15 +148,18 @@ export function initGallery() {
       const titleDimMatch = title.match(dimRegex);
       if (titleDimMatch) {
         finalDim = titleDimMatch[0];
-      } else if (rawDim && rawDim.trim()) {
+      } else if (!isPlaceholder(rawDim)) {
         finalDim = rawDim.trim();
       }
+
+      if (isPlaceholder(finalYear)) finalYear = 'TBA';
+      if (isPlaceholder(finalDim)) finalDim = 'TBA';
 
       // Populate lightbox data
       lightboxImg.src = fullImgUrl;
       lightboxTitle.textContent = title;
       lightboxYear.textContent = finalYear;
-      lightboxMedium.textContent = medium;
+      lightboxMedium.textContent = cleanMedium;
       lightboxDim.textContent = finalDim;
 
       // Reset Scale Widget State
