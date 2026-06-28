@@ -140,4 +140,14 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('resize', updateArrowVisibility);
     }
   }
+
+  // --- 8. NFT ADDRESS HIGHLIGHTING ---
+  const verificationBody = document.querySelector('.verification-body');
+  if (verificationBody) {
+    const ethAddressRegex = /0x[a-fA-F0-9]{40}/g;
+    verificationBody.innerHTML = verificationBody.innerHTML.replace(
+      ethAddressRegex,
+      (match) => `<code class="eth-address">${match}</code>`
+    );
+  }
 });

@@ -1679,11 +1679,26 @@ body.menu-open .header {
 }
 
 .verification-body p {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.6;
   color: var(--text-ink);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.eth-address {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem !important;
+  color: var(--text-ink) !important;
+  background: rgba(22, 22, 21, 0.05);
+  border: 1px solid rgba(22, 22, 21, 0.08);
+  padding: 0.15rem 0.35rem;
+  border-radius: 6px;
   word-break: break-all;
+  overflow-wrap: break-word;
+  display: inline;
+  font-weight: 500;
+  text-transform: none !important;
 }
 
 /* --- 13. PRIVACY & IMPRESSUM PAGE --- */
