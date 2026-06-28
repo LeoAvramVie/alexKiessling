@@ -681,9 +681,15 @@ body.menu-open .header {
   .hero-brand-card {
     padding: 2.5rem 1.25rem;
     width: 92%;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.04);
   }
   .hero-title-elegant {
-    font-size: clamp(1.2rem, 6.2vw, 1.8rem);
+    font-size: clamp(1.25rem, 6.2vw, 1.8rem);
+    font-weight: 400;
+    color: #000000;
     --title-spacing: 0.11em;
     --title-spacing-expanded: 0.14em;
     padding-left: var(--title-spacing);
@@ -696,27 +702,30 @@ body.menu-open .header {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.5rem 0.4rem;
+    gap: 0.6rem 1rem;
     width: 100%;
-    margin-top: var(--spacing-sm);
+    margin-top: var(--spacing-md);
   }
   .hero-center-nav a {
-    font-size: 0.7rem;
-    padding: 0.4rem 0.8rem;
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(22, 22, 21, 0.08);
-    border-radius: 20px;
-    color: var(--text-ink);
-    opacity: 0.95;
-    transition: all var(--transition-fast) ease;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #000000;
+    opacity: 0.75;
+    letter-spacing: 0.12em;
+    padding: 0.2rem 0.4rem;
+    background: none;
+    border: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    border-radius: 0;
+    transition: opacity 0.2s ease;
   }
   .hero-center-nav a:hover,
   .hero-center-nav a:active {
-    background: var(--text-ink);
-    color: #ffffff;
-    border-color: var(--text-ink);
+    opacity: 1;
+    color: var(--text-slate);
+    background: none;
   }
   .nav-divider {
     display: none; /* Hide dividers to wrap items cleanly on mobile */
