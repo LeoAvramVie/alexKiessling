@@ -2486,7 +2486,7 @@ body.menu-open .header {
     box-shadow: none !important;
     z-index: 10 !important;
     overflow: hidden !important;
-    padding: 1rem 1rem !important;
+    padding: 0.8rem 1rem !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     perspective: none !important;
@@ -2500,25 +2500,21 @@ body.menu-open .header {
   }
 
   .lightbox-spec-sheet {
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 0.3rem 0.6rem !important;
-    margin-top: 0.3rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.35rem !important;
+    margin-top: 0.4rem !important;
   }
 
   .spec-row {
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
-    gap: 0.2rem !important;
-    align-items: center !important;
-    display: inline-flex !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    padding-bottom: 0.25rem !important;
   }
 
-  .spec-row:not(:last-child)::after {
-    content: "•";
-    margin-left: 0.6rem;
-    color: var(--text-slate);
-    opacity: 0.4;
+  .spec-row::after {
+    display: none !important;
   }
 
   .scale-visualizer-container {
