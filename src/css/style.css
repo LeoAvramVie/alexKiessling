@@ -2387,7 +2387,7 @@ body.menu-open .header {
   .lightbox-image-panel {
     height: 60% !important;
     min-height: auto !important;
-    padding: 4rem 1rem 1rem 1rem !important;
+    padding: 2.2rem 1rem 0.5rem 1rem !important;
     border-right: none !important;
     border-bottom: 1px solid var(--border-light) !important;
     display: flex !important;
@@ -2398,8 +2398,9 @@ body.menu-open .header {
   }
 
   .lightbox-main-view {
-    max-width: 100%;
-    max-height: 55vh;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
   }
 
   .lightbox-details-sidebar {
@@ -2413,12 +2414,13 @@ body.menu-open .header {
     box-shadow: none !important;
     z-index: 10 !important;
     overflow-y: auto !important;
-    padding: var(--spacing-md) !important;
+    padding: 1.2rem 1rem !important;
   }
 
   .lightbox-title {
-    font-size: 1.35rem;
-    margin-bottom: var(--spacing-sm);
+    font-size: 1.2rem !important;
+    margin-bottom: var(--spacing-xs) !important;
+    line-height: 1.2 !important;
   }
 
   .scale-visualizer-container {
@@ -2426,20 +2428,21 @@ body.menu-open .header {
   }
 
   .scale-visualizer-container.visible {
-    position: absolute !important;
+    position: fixed !important;
     top: 0 !important;
     left: 0 !important;
-    width: 100% !important;
-    height: 60% !important;
-    background: rgba(250, 249, 246, 0.98) !important;
-    z-index: 100 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    background: #ffffff !important;
+    z-index: 2300 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     margin-top: 0 !important;
     border: none !important;
     border-radius: 0 !important;
-    padding: 1.5rem !important;
+    padding: 2rem 1.5rem !important;
   }
 
   .scale-close-btn {
@@ -2447,25 +2450,24 @@ body.menu-open .header {
     position: absolute !important;
     top: 15px !important;
     right: 15px !important;
-    width: 36px !important;
-    height: 36px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.9) !important;
-    border: 1px solid var(--border-light) !important;
+    background: rgba(22, 22, 21, 0.05) !important;
+    border: none !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 1.6rem !important;
+    font-size: 1.8rem !important;
     color: var(--text-ink) !important;
-    z-index: 110 !important;
+    z-index: 2400 !important;
     cursor: pointer !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
     padding-bottom: 4px !important;
     transition: all 0.2s ease !important;
   }
 
   .scale-close-btn:active {
     transform: scale(0.92) !important;
-    background: #ffffff !important;
+    background: rgba(22, 22, 21, 0.1) !important;
   }
 
   .lightbox-details-sidebar::before {

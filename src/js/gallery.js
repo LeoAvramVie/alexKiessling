@@ -19,6 +19,14 @@ export function initGallery() {
           card.classList.add('hidden');
         }
       });
+
+      // Force WebKit columns reflow to fix gap at top of columns
+      const grid = document.querySelector('.gallery-masonry-grid');
+      if (grid) {
+        grid.style.display = 'none';
+        grid.offsetHeight; // trigger reflow
+        grid.style.display = 'block';
+      }
     });
   });
 
@@ -34,6 +42,14 @@ export function initGallery() {
         card.classList.add('hidden');
       }
     });
+
+    // Force WebKit columns reflow on load
+    const grid = document.querySelector('.gallery-masonry-grid');
+    if (grid) {
+      grid.style.display = 'none';
+      grid.offsetHeight; // trigger reflow
+      grid.style.display = 'block';
+    }
   }
 
   // --- 2. DESKTOP RGB SHIFT OVERLAYS ---
