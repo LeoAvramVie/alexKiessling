@@ -28,6 +28,10 @@ export default defineConfig({
                     .id('artwork')
                     .child(S.documentTypeList('artwork').title('Alle Werke')),
                 S.listItem()
+                    .title('Galerie Kategorien (Zyklen)')
+                    .id('category')
+                    .child(S.documentTypeList('category').title('Alle Kategorien')),
+                S.listItem()
                     .title('Vita-Highlights (Top Slider)')
                     .id('vitaHighlight')
                     .child(S.documentTypeList('vitaHighlight').title('Timeline Highlights')),

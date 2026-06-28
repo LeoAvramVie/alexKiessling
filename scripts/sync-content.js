@@ -59,6 +59,15 @@ async function sync() {
       },
       "footer": *[_type == "footer" && _id == "footer"][0],
       "artworks": *[_type == "artwork"] | order(year desc, _createdAt desc),
+      "categories": *[_type == "category"] | order(order asc) {
+        _id,
+        title,
+        "slug": slug.current,
+        order,
+        artworks[]->{
+          ...
+        }
+      },
       "vitaHighlights": *[_type == "vitaHighlight"] | order(order asc),
       "vitaEntries": *[_type == "vitaEntry"] | order(order asc),
       "videos": *[_type == "video"],
@@ -151,39 +160,53 @@ function compilePage(page, data, lang) {
   }
   
   else if (page.template === 'gallery') {
+    // Generate categories list from Sanity categories query, or fallback if none exist
+    let categoriesList = data.categories || [];
+    if (categoriesList.length === 0) {
+      const fallbackNames = ['Real', 'shifts1', 'shifts2', 'Headspins', 'Heads', 'water', 'print editions', 'Drawings', 'sculptures', 'long Distance Art'];
+      categoriesList = fallbackNames.map(name => {
+        return {
+          title: name,
+          slug: name,
+          artworks: (data.artworks || []).filter(art => art.category === name)
+        };
+      });
+    }
+
     // Generate category tabs
-    const categories = ['Real', 'shifts1', 'shifts2', 'Headspins', 'Heads', 'water', 'print editions', 'Drawings', 'sculptures', 'long Distance Art'];
-    const tabsHtml = categories.map(cat => {
-      const activeClass = cat === 'Real' ? 'class="active"' : '';
-      return `<button ${activeClass} data-filter="${cat}">${cat}</button>`;
+    const tabsHtml = categoriesList.map((cat, idx) => {
+      const activeClass = idx === 0 ? 'class="active"' : '';
+      return `<button ${activeClass} data-filter="${cat.slug}">${cat.title}</button>`;
     }).join('\n');
 
     // Generate artwork items grid
-    const itemsHtml = data.artworks.map(art => {
-      const imgUrl = getImageUrl(art.image, 800);
-      const fullUrl = getImageUrl(art.image, 2000);
-      const title = art.title || 'Untitled';
-      const year = art.year || '2025';
-      const dim = art.dimensions || '';
-      const technique = isEn ? (art.techniqueEn || art.techniqueDe) : (art.techniqueDe || art.techniqueEn);
-      
-      // In-situ views
-      const inSituUrls = (art.inSituImages || []).map(img => getImageUrl(img, 1600)).join(',');
-      
-      return `
-      <div class="gallery-item-card reveal-on-scroll" data-category="${art.category || 'Real'}" data-year="${year}" data-dimensions="${dim}" data-technique="${technique}" data-insitu="${inSituUrls}" data-full="${fullUrl}">
-        <div class="gallery-image-wrapper">
-          <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
-          <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
-          <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
-          <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy">
-          <div class="mobile-lens-indicator"></div>
-        </div>
-        <div class="gallery-item-label">
-          <div class="label-title">${title}</div>
-          <div class="label-meta">${year} — ${technique} — ${dim}</div>
-        </div>
-      </div>`;
+    const itemsHtml = categoriesList.flatMap(cat => {
+      return (cat.artworks || []).map(art => {
+        const imgUrl = getImageUrl(art.image, 800);
+        const fullUrl = getImageUrl(art.image, 2000);
+        const title = art.title || 'Untitled';
+        const year = art.year || '2025';
+        const dim = art.dimensions || '';
+        const technique = isEn ? (art.techniqueEn || art.techniqueDe) : (art.techniqueDe || art.techniqueEn);
+        
+        // In-situ views
+        const inSituUrls = (art.inSituImages || []).map(img => getImageUrl(img, 1600)).join(',');
+        
+        return `
+        <div class="gallery-item-card reveal-on-scroll" data-category="${cat.slug}" data-year="${year}" data-dimensions="${dim}" data-technique="${technique}" data-insitu="${inSituUrls}" data-full="${fullUrl}">
+          <div class="gallery-image-wrapper">
+            <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
+            <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
+            <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
+            <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy">
+            <div class="mobile-lens-indicator"></div>
+          </div>
+          <div class="gallery-item-label">
+            <div class="label-title">${title}</div>
+            <div class="label-meta">${year} — ${technique} — ${dim}</div>
+          </div>
+        </div>`;
+      });
     }).join('\n');
 
     content = content
@@ -293,7 +316,11 @@ function compilePage(page, data, lang) {
   }
   
   else if (page.template === 'projects') {
-    const ldaArtworks = (data.artworks || []).filter(art => 
+    // Try to get Long Distance Art artworks from dynamic category first
+    const ldaCat = (data.categories || []).find(cat => 
+      cat.slug === 'long-distance-art' || cat.slug === 'long-Distance-Art' || cat.title.toLowerCase() === 'long distance art'
+    );
+    const ldaArtworks = ldaCat ? (ldaCat.artworks || []) : (data.artworks || []).filter(art => 
       art.category && art.category.toLowerCase() === 'long distance art'
     );
 
