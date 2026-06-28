@@ -3,40 +3,57 @@ export function initGallery() {
   const grid = document.querySelector('.gallery-masonry-grid');
   if (!grid) return;
 
-  const cards = document.querySelectorAll('.gallery-item-card');
+  const hiddenSource = grid.querySelector('.gallery-hidden-source');
+  if (!hiddenSource) return;
+
+  const cards = hiddenSource.querySelectorAll('.gallery-item-card');
   const originalCardsArray = Array.from(cards);
 
-  // Hidden pool container to store filtered out cards physically outside the grid
-  let pool = document.getElementById('gallery-hidden-pool');
-  if (!pool) {
-    pool = document.createElement('div');
-    pool.id = 'gallery-hidden-pool';
-    pool.style.display = 'none';
-    document.body.appendChild(pool);
-  }
+  const col1 = grid.querySelector('.masonry-col-1');
+  const col2 = grid.querySelector('.masonry-col-2');
+  const col3 = grid.querySelector('.masonry-col-3');
+  if (!col1 || !col2 || !col3) return;
+
+  const columns = [col1, col2, col3];
 
   const applyFilter = (filterValue) => {
+    // Clear the active layout columns
+    col1.innerHTML = '';
+    col2.innerHTML = '';
+    col3.innerHTML = '';
+
+    // Determine how many columns to use
+    // <= 992px matches our tablet/mobile 2-column breakpoint
+    const numCols = window.innerWidth <= 992 ? 2 : 3;
+
+    let colIndex = 0;
     originalCardsArray.forEach(card => {
       const category = card.getAttribute('data-category');
-      const shouldShow = (filterValue === 'All' || category === filterValue);
-      if (shouldShow) {
-        grid.appendChild(card); // Re-insert card in original order
+      // Case-insensitive match to support "Real" vs "REAL"
+      const matchesFilter = (filterValue === 'All' || (category && category.toLowerCase() === filterValue.toLowerCase()));
+      
+      if (matchesFilter) {
+        columns[colIndex].appendChild(card);
         card.classList.remove('hidden');
+        card.classList.add('revealed'); // Instantly reveal filtered items
+        colIndex = (colIndex + 1) % numCols;
       } else {
-        pool.appendChild(card); // Move to hidden pool
+        hiddenSource.appendChild(card);
         card.classList.add('hidden');
       }
     });
-
-    // Force WebKit columns reflow to fix gap at top of columns without flicker
-    requestAnimationFrame(() => {
-      grid.style.columnGap = '0.74rem';
-      grid.offsetHeight; // trigger reflow
-      requestAnimationFrame(() => {
-        grid.style.columnGap = '';
-      });
-    });
   };
+
+  // Re-distribute cards on resize to handle layout column count transitions
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      const activeTab = document.querySelector('.filter-tabs-container button.active');
+      const filterValue = activeTab ? activeTab.getAttribute('data-filter') : 'All';
+      applyFilter(filterValue);
+    }, 150);
+  });
 
   // --- 1. FILTER TABS LOGIK ---
   filterTabs.forEach(btn => {
@@ -55,6 +72,8 @@ export function initGallery() {
   if (initialActiveTab) {
     const filterValue = initialActiveTab.getAttribute('data-filter');
     applyFilter(filterValue);
+  } else {
+    applyFilter('All');
   }
 
   // --- 2. DESKTOP RGB SHIFT OVERLAYS ---
@@ -331,16 +350,9 @@ export function initGallery() {
 
   // --- 8. LOAD EVENT REFLOW FOR MASONRY HEIGHTS ---
   const triggerFinalReflow = () => {
-    const gridEl = document.querySelector('.gallery-masonry-grid');
-    if (gridEl) {
-      requestAnimationFrame(() => {
-        gridEl.style.columnGap = '0.74rem';
-        gridEl.offsetHeight; // trigger reflow
-        requestAnimationFrame(() => {
-          gridEl.style.columnGap = '';
-        });
-      });
-    }
+    const activeTab = document.querySelector('.filter-tabs-container button.active');
+    const filterValue = activeTab ? activeTab.getAttribute('data-filter') : 'All';
+    applyFilter(filterValue);
   };
 
   if (document.readyState === 'complete') {

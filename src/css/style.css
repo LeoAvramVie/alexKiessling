@@ -926,16 +926,23 @@ body.menu-open .header {
 
 /* Gallery Grid (Fluid Masonry Layout) */
 .gallery-masonry-grid {
-  display: block;
-  column-count: 3;
-  column-gap: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.masonry-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
 
 /* Glass Cards */
 .gallery-item-card {
-  display: inline-block;
+  display: block;
   width: 100%;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 0;
   break-inside: avoid;
   -webkit-column-break-inside: avoid;
   will-change: transform;
@@ -1738,87 +1745,49 @@ body.menu-open .header {
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border-top: 1px solid var(--glass-border);
-  padding: var(--spacing-lg) 0;
+  padding: 1.25rem 0;
   position: relative;
   z-index: 10;
 }
 
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: var(--spacing-lg);
-}
-
-.footer-block-title {
-  font-family: var(--font-headings);
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--spacing-sm);
-  color: var(--text-ink);
-}
-
-.contact-email {
-  font-family: var(--font-headings);
-  font-size: clamp(1.1rem, 4.5vw, 2.8rem);
-  font-weight: 900;
-  color: var(--text-ink);
-  display: block;
-  margin-bottom: var(--spacing-xs);
-  letter-spacing: -0.02em;
-  word-break: break-all;
-  overflow-wrap: break-word;
-}
-
-.contact-email:hover {
-  opacity: 0.5;
-}
-
-.contact-hint {
-  font-family: var(--font-headings);
-  font-size: 0.82rem;
-  font-weight: 400;
-  color: var(--text-slate);
-  max-width: 380px;
-  line-height: 1.4;
-}
-
-.social-links-grid {
+.footer-content {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.social-links-grid a {
+.footer-left .copyright {
   font-family: var(--font-headings);
-  font-size: 0.82rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-slate);
-}
-
-.social-links-grid a:hover {
-  color: var(--text-ink);
-}
-
-.legal-links a {
-  font-family: var(--font-headings);
-  font-size: 0.82rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-slate);
-}
-
-.legal-links a:hover {
-  color: var(--text-ink);
-}
-
-.copyright {
   font-size: 0.8rem;
-  margin-top: var(--spacing-sm);
+  color: var(--text-slate);
+  margin: 0;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.footer-email,
+.footer-link {
+  font-family: var(--font-headings);
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-slate);
+  transition: var(--transition-smooth);
+}
+
+.footer-email:hover,
+.footer-link:hover {
+  color: var(--text-ink);
+}
+
+.footer-divider {
+  color: var(--border-light);
+  font-size: 0.8rem;
 }
 
 /* --- 15. LIGHTBOX GLASS COCKPIT --- */
@@ -2114,10 +2083,8 @@ body.menu-open .header {
     font-size: 2.8rem;
   }
 
-  .gallery-masonry-grid {
-    display: block;
-    column-count: 2;
-    column-gap: var(--spacing-md);
+  .masonry-col-3 {
+    display: none !important;
   }
 
   .lightbox-content-wrapper {
@@ -2337,12 +2304,14 @@ body.menu-open .header {
   }
 
   .gallery-masonry-grid {
-    display: block;
-    column-count: 2;
-    column-gap: 0.75rem;
+    display: flex !important;
+    gap: 0.75rem !important;
+  }
+  .masonry-col {
+    gap: 0.75rem !important;
   }
   .gallery-item-card {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0 !important;
   }
 
   .gallery-item-card {
@@ -2368,47 +2337,27 @@ body.menu-open .header {
   }
 
   .footer {
-    padding: 2rem 0 !important;
+    padding: 1rem 0 !important;
   }
-
-  .footer-grid {
-    grid-template-columns: 1fr !important;
-    text-align: center !important;
-    gap: 1.5rem !important;
-  }
-
-  .footer-block {
-    display: flex !important;
+  .footer-content {
     flex-direction: column !important;
-    align-items: center !important;
+    gap: 0.5rem !important;
+    text-align: center !important;
   }
-
-  .contact-email {
-    font-size: clamp(1.2rem, 5.5vw, 1.8rem) !important;
-    margin-bottom: 0.3rem !important;
+  .footer-right {
+    flex-direction: column !important;
+    gap: 0.4rem !important;
+    width: 100% !important;
   }
-
-  .contact-hint {
-    font-size: 0.85rem !important;
-    max-width: 290px !important;
-    line-height: 1.45 !important;
-    color: var(--text-slate) !important;
-    margin-top: 0.2rem !important;
+  .footer-divider {
+    display: none !important;
   }
-
-  .footer-block-title {
-    font-size: 0.75rem !important;
-    margin-bottom: 0.3rem !important;
-    opacity: 0.8 !important;
+  .footer-email,
+  .footer-link {
+    font-size: 0.78rem !important;
   }
-
-  .legal-links {
-    margin-bottom: 0.3rem !important;
-  }
-  
-  .copyright {
-    font-size: 0.75rem !important;
-    margin-top: 0.2rem !important;
+  .footer-left .copyright {
+    font-size: 0.78rem !important;
   }
 
   .footer-block.block-legal {
