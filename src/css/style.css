@@ -2688,3 +2688,21 @@ body.menu-open .header {
 .page-homepage .footer {
   @apply hidden;
 }
+
+/* Lightbox No-Details mode (for Projects page images) */
+.lightbox-modal.no-details .lightbox-details-sidebar {
+  display: none !important;
+}
+
+.lightbox-modal.no-details .lightbox-image-panel {
+  flex: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: var(--spacing-lg) !important;
+}
+
+@media (max-width: 768px) {
+  .lightbox-modal.no-details .lightbox-image-panel {
+    padding: 3rem 1.5rem 1.5rem 1.5rem !important; /* Top padding to make room for close button */
+  }
+}

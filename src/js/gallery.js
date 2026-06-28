@@ -174,6 +174,14 @@ export function initGallery() {
       lightboxMedium.textContent = cleanMedium;
       lightboxDim.textContent = finalDim;
 
+      // Check if this card belongs to a project section to disable details panel
+      const isProjectCard = !!card.closest('.projects-page-section');
+      if (isProjectCard) {
+        lightbox.classList.add('no-details');
+      } else {
+        lightbox.classList.remove('no-details');
+      }
+
       // Open lightbox
       lightbox.classList.add('open');
       lightbox.setAttribute('aria-hidden', 'false');
@@ -188,6 +196,7 @@ export function initGallery() {
   // Close Lightbox
   const closeLightbox = () => {
     lightbox.classList.remove('open');
+    lightbox.classList.remove('no-details');
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lightbox-open');
     lightboxImg.src = '';
