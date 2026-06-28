@@ -885,15 +885,20 @@ body.menu-open .header {
   border-color: var(--text-ink);
 }
 
-/* Gallery Grid */
+/* Gallery Grid (Fluid Masonry Layout) */
 .gallery-masonry-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-md);
+  display: block;
+  column-count: 3;
+  column-gap: var(--spacing-md);
 }
 
 /* Glass Cards */
 .gallery-item-card {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -2035,7 +2040,9 @@ body.menu-open .header {
   }
 
   .gallery-masonry-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: block;
+    column-count: 2;
+    column-gap: var(--spacing-md);
   }
 
   .lightbox-content-wrapper {
@@ -2197,8 +2204,12 @@ body.menu-open .header {
   }
 
   .gallery-masonry-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    display: block;
+    column-count: 2;
+    column-gap: 0.75rem;
+  }
+  .gallery-item-card {
+    margin-bottom: 0.75rem;
   }
 
   .gallery-item-card {
