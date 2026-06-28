@@ -28,6 +28,13 @@ export default {
       validation: Rule => Rule.required()
     },
     {
+      name: 'image',
+      title: 'Begleitbild / Porträt',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Optionales Bild, das neben dem Text angezeigt wird.'
+    },
+    {
       name: 'order',
       title: 'Sortiernummer',
       type: 'number',
