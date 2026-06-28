@@ -1866,7 +1866,11 @@ body.menu-open .header {
 }
 
 .lightbox-title {
-  font-size: 2.6rem;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.95rem;
+  line-height: 1.25;
+  color: var(--text-ink);
   margin-bottom: var(--spacing-md);
 }
 
@@ -2286,6 +2290,11 @@ body.menu-open .header {
     z-index: 10;
     overflow: visible;
     padding: var(--spacing-md);
+  }
+
+  .lightbox-title {
+    font-size: 1.35rem;
+    margin-bottom: var(--spacing-sm);
   }
 
   .lightbox-details-sidebar::before {
