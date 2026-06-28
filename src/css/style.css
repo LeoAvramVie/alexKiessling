@@ -1763,6 +1763,24 @@ body.menu-open .header {
   margin: 0;
 }
 
+.footer-author-sep {
+  margin: 0 0.4rem;
+  color: var(--border-light);
+}
+
+.author-link {
+  color: var(--text-slate);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  border-bottom: 1px dashed transparent;
+  font-weight: 500;
+}
+
+.author-link:hover {
+  color: var(--text-ink);
+  border-bottom-color: var(--text-ink);
+}
+
 .footer-right {
   display: flex;
   align-items: center;
