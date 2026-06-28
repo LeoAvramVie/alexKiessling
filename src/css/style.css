@@ -2171,41 +2171,67 @@ body.menu-open .header {
     grid-column: span 1;
   }
 
-  .lightbox-details-sidebar {
+  .lightbox-modal {
+    overflow-y: auto;
+  }
+
+  .lightbox-close-btn {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60%;
-    transform: translateY(calc(100% - 60px));
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    border-top: 1px solid var(--border-light);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -15px 35px rgba(18, 18, 18, 0.04);
-    z-index: 1020;
-    overflow: visible;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(22, 22, 21, 0.08);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    font-size: 1.8rem;
+    z-index: 2000;
+    padding-bottom: 4px;
   }
 
-  .lightbox-details-sidebar.expanded {
-    transform: translateY(0);
-  }
-
-  .lightbox-details-sidebar::before {
-    content: '';
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 45px;
-    height: 3px;
-    background-color: var(--border-light);
-    border-radius: 2px;
-    cursor: pointer;
+  .lightbox-content-wrapper {
+    flex-direction: column;
+    height: auto;
+    min-height: 100%;
   }
 
   .lightbox-image-panel {
-    height: calc(100% - 60px);
-    padding-bottom: 75px;
+    height: auto;
+    min-height: 65vh;
+    padding: 3.5rem 1rem 1.5rem 1rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .lightbox-main-view {
+    max-width: 100%;
+    max-height: 55vh;
+  }
+
+  .lightbox-details-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    transform: none;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: none;
+    border-radius: 0;
+    box-shadow: none;
+    z-index: 10;
+    overflow: visible;
+    padding: var(--spacing-md);
+  }
+
+  .lightbox-details-sidebar::before {
+    display: none;
   }
 
   .statements-list-container {
