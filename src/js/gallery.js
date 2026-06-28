@@ -20,12 +20,12 @@ export function initGallery() {
         }
       });
 
-      // Force WebKit columns reflow to fix gap at top of columns
+      // Force WebKit columns reflow to fix gap at top of columns without flicker
       const grid = document.querySelector('.gallery-masonry-grid');
       if (grid) {
-        grid.style.display = 'none';
+        grid.style.columnGap = '0.74rem';
         grid.offsetHeight; // trigger reflow
-        grid.style.display = 'block';
+        grid.style.columnGap = '';
       }
     });
   });
@@ -43,12 +43,12 @@ export function initGallery() {
       }
     });
 
-    // Force WebKit columns reflow on load
+    // Force WebKit columns reflow on load without flicker
     const grid = document.querySelector('.gallery-masonry-grid');
     if (grid) {
-      grid.style.display = 'none';
+      grid.style.columnGap = '0.74rem';
       grid.offsetHeight; // trigger reflow
-      grid.style.display = 'block';
+      grid.style.columnGap = '';
     }
   }
 
