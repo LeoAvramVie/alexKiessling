@@ -253,11 +253,10 @@ function compilePage(page, data, lang) {
               ${formatTextToHtml(text)}
             </div>
             <div class="fade-overlay"></div>
-            <button class="btn-read-more" aria-expanded="false">
-              <span class="lang-de label-more">Mehr lesen</span>
-              <span class="lang-en label-more">Read more</span>
-              <span class="lang-de label-less">Weniger anzeigen</span>
-              <span class="lang-en label-less">Read less</span>
+            <button class="btn-read-more" aria-label="Mehr lesen / Read more" aria-expanded="false">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
             </button>
           </div>
         `;
