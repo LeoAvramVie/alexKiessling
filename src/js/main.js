@@ -55,12 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const art3 = document.querySelector('.bg-art-3');
   
   if (art1 || art2 || art3) {
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      if (art1) art1.style.transform = `translateY(${scrollY * 0.15}px) rotate(${scrollY * 0.01}deg)`;
-      if (art2) art2.style.transform = `translateY(${scrollY * -0.1}px) rotate(${scrollY * -0.005}deg)`;
-      if (art3) art3.style.transform = `translateY(${scrollY * 0.05}px)`;
-    });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          if (art1) art1.style.transform = `translateY(${scrollY * 0.15}px) rotate(${scrollY * 0.01}deg)`;
+          if (art2) art2.style.transform = `translateY(${scrollY * -0.1}px) rotate(${scrollY * -0.005}deg)`;
+          if (art3) art3.style.transform = `translateY(${scrollY * 0.05}px)`;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
   }
   // --- 6. READ MORE / COLLAPSE STATEMENTS TOGGLE ---
   const readMoreButtons = document.querySelectorAll('.btn-read-more');
