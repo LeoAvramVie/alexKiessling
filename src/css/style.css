@@ -431,6 +431,24 @@ a {
 .nav.open .nav-links a:nth-child(4) { transition-delay: 0.23s; }
 .nav.open .nav-links a:nth-child(5) { transition-delay: 0.28s; }
 .nav.open .nav-links a:nth-child(6) { transition-delay: 0.33s; }
+.nav.open .nav-links a:nth-child(7) { transition-delay: 0.38s; }
+
+.nav-download-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-icon {
+  opacity: 0.45;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  flex-shrink: 0;
+}
+
+.nav-download-link:hover .download-icon {
+  opacity: 0.9;
+  transform: translateY(2px);
+}
 
 /* Dim other links when one is hovered */
 .nav-links:hover a:not(:hover) {
