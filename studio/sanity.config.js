@@ -26,7 +26,19 @@ export default defineConfig({
                 S.listItem()
                     .title('Werke & Galerie (Zyklen)')
                     .id('category')
-                    .child(S.documentTypeList('category').title('Alle Zyklen')),
+                    .child(
+                      S.documentTypeList('category')
+                        .title('Alle Zyklen')
+                        .child(categoryId =>
+                          S.documentTypeList('artwork')
+                            .title('Werke')
+                            .filter('_type == "artwork" && (category == $categoryId || category._ref == $categoryId || category == *[_type == "category" && _id == $categoryId][0].slug.current || category == *[_type == "category" && _id == $categoryId][0].title)')
+                            .params({ categoryId })
+                            .initialValueTemplates([
+                              S.initialValueTemplateItem('artwork-in-category-ref', { categoryId })
+                            ])
+                        )
+                    ),
                 S.listItem()
                     .title('Vita-Highlights (Top Slider)')
                     .id('vitaHighlight')
@@ -53,8 +65,21 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
-    templates: (templates) =>
-        templates.filter((template) => !singletonTypes.has(template.schemaId)),
+    templates: (templates) => [
+      ...templates.filter((template) => !singletonTypes.has(template.schemaId)),
+      {
+        id: 'artwork-in-category-ref',
+        title: 'Artwork in Category Reference',
+        schemaType: 'artwork',
+        parameters: [{ name: 'categoryId', type: 'string' }],
+        value: (params) => ({
+          category: {
+            _type: 'reference',
+            _ref: params.categoryId
+          }
+        })
+      }
+    ]
   },
 
   document: {

@@ -64,7 +64,7 @@ async function sync() {
         title,
         "slug": slug.current,
         order,
-        artworks[] {
+        "artworks": *[_type == "artwork" && (category == ^._id || category._ref == ^._id || category == ^.slug.current || category == ^.title)] | order(year desc, _createdAt desc) {
           title,
           year,
           dimensions,
