@@ -2433,9 +2433,22 @@ body.menu-open .header {
 }
 
 .projects-art-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-md);
+  display: block;
+  column-count: 3;
+  column-gap: var(--spacing-md);
+}
+
+.slider-scroll-hint {
+  display: none;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-slate);
+  opacity: 0.6;
+  margin-top: -1rem;
+  margin-bottom: var(--spacing-xs);
+  text-align: right;
 }
 
 /* Mobile responsive styling for Projects */
@@ -2448,8 +2461,13 @@ body.menu-open .header {
 
 @media (max-width: 768px) {
   .projects-art-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    display: block;
+    column-count: 2;
+    column-gap: 0.75rem;
+  }
+
+  .slider-scroll-hint {
+    display: block;
   }
 
   /* Mobile responsive styling for Vita spacing & typography */
