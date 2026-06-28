@@ -2626,6 +2626,44 @@ body.menu-open .header {
     column-gap: 0.75rem;
   }
 
+  /* Tighten subpage headers & section paddings to minimize scroll on mobile */
+  .gallery-page-section,
+  .vita-page-section,
+  .statement-page-section,
+  .projects-page-section,
+  .gt-page-section,
+  .privacy-page-section {
+    padding-top: calc(60px + 1.5rem) !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .projects-page-section {
+    gap: 1.5rem !important;
+  }
+
+  .project-block {
+    padding: 0.5rem 0 !important;
+    gap: 0.8rem !important;
+  }
+
+  .gallery-header,
+  .page-header {
+    margin-bottom: 1.2rem !important;
+  }
+
+  .page-title {
+    font-size: clamp(2.2rem, 8vw, 3.2rem) !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .gallery-intro,
+  .vita-intro,
+  .gt-intro,
+  .projects-intro {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
   .slider-scroll-hint {
     display: block;
   }
