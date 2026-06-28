@@ -1,0 +1,267 @@
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { resolve, dirname } from 'path';
+import { createClient } from '@sanity/client';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'oboaxji6';
+const dataset = process.env.SANITY_STUDIO_DATASET || 'production';
+
+const client = createClient({
+  projectId,
+  dataset,
+  apiVersion: '2026-06-18',
+  useCdn: true
+});
+
+// Helper to format block texts / newlines into HTML paragraphs
+function formatTextToHtml(text) {
+  if (!text) return '';
+  return text
+      .split(/\n\s*\n/)
+      .map(p => {
+        const trimmed = p.trim();
+        if (!trimmed) return '';
+        return `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
+      })
+      .join('\n');
+}
+
+// Helper to compile Sanity CDN image URLs
+function getImageUrl(imageObj, maxWidth = 1600) {
+  if (!imageObj || !imageObj.asset || !imageObj.asset._ref) return '';
+  const ref = imageObj.asset._ref;
+  const parts = ref.split('-');
+  if (parts.length < 4) return '';
+  const id = parts[1];
+  const dimensions = parts[2];
+  const ext = parts[3];
+  
+  const [origWidth] = dimensions.split('x').map(Number);
+  const targetWidth = Math.min(maxWidth, origWidth || 1600);
+  
+  return `https://cdn.sanity.io/images/${projectId}/${dataset}/${id}-${dimensions}.${ext}?w=${targetWidth}&auto=format&q=80`;
+}
+
+async function sync() {
+  console.log('🔄 Syncing content from Sanity CMS...');
+  
+  let data = {};
+  const cachePath = resolve('src/sanity-cache.json');
+
+  try {
+    console.log('📡 Fetching from Sanity API...');
+    const result = await client.fetch(`{
+      "homepage": *[_type == "homepage" && _id == "homepage"][0],
+      "footer": *[_type == "footer" && _id == "footer"][0],
+      "artworks": *[_type == "artwork"] | order(year desc, _createdAt desc),
+      "vita": *[_type == "vita"] | order(year desc),
+      "videos": *[_type == "video"]
+    }`);
+
+    if (result.homepage && result.footer) {
+      data = result;
+      const cacheDir = dirname(cachePath);
+      if (!existsSync(cacheDir)) {
+        mkdirSync(cacheDir, { recursive: true });
+      }
+      writeFileSync(cachePath, JSON.stringify(data, null, 2), 'utf-8');
+      console.log('💾 Cached content locally.');
+    } else {
+      throw new Error('Missing homepage or footer documents in CMS.');
+    }
+  } catch (error) {
+    console.warn('⚠️ API fetch failed, loading from cache...', error.message);
+    if (existsSync(cachePath)) {
+      data = JSON.parse(readFileSync(cachePath, 'utf-8'));
+    } else {
+      console.error('❌ No cache found! Build failed.');
+      process.exit(1);
+    }
+  }
+
+  // --- COMPILE PAGES ---
+  const pages = [
+    { file: 'index.html', template: 'homepage', titleDe: 'Startseite', titleEn: 'Home' },
+    { file: 'gallery/index.html', template: 'gallery', titleDe: 'Galerie', titleEn: 'Gallery' },
+    { file: 'vita/index.html', template: 'vita', titleDe: 'Vita', titleEn: 'Vita' },
+    { file: 'statement/index.html', template: 'statement', titleDe: 'Statement', titleEn: 'Statement' },
+    { file: 'alexkiesslingxgt/index.html', template: 'gt', titleDe: 'alexkiesslingxGT', titleEn: 'alexkiesslingxGT' },
+    { file: 'privacy/index.html', template: 'privacy', titleDe: 'Datenschutz & Impressum', titleEn: 'Privacy & Imprint' }
+  ];
+
+  pages.forEach(page => {
+    // 1. Compile German (de)
+    compilePage(page, data, 'de');
+    // 2. Compile English (en)
+    compilePage(page, data, 'en');
+  });
+
+  console.log('🎉 All pages compiled successfully in DE and EN!');
+}
+
+function compilePage(page, data, lang) {
+  const isEn = lang === 'en';
+  const relativePrefix = page.file.includes('/') ? '../' : './';
+  const enRelativePrefix = page.file.includes('/') ? '../../' : '../';
+  const prefix = isEn ? enRelativePrefix : relativePrefix;
+  
+  const destDir = isEn ? resolve(`en/${dirname(page.file)}`) : resolve(dirname(page.file));
+  const destPath = isEn ? resolve(`en/${page.file}`) : resolve(page.file);
+  
+  if (!existsSync(destDir)) {
+    mkdirSync(destDir, { recursive: true });
+  }
+
+  console.log(`Compiling [${lang.toUpperCase()}] ${page.file}...`);
+  
+  // Load layout and page content
+  const layout = readFileSync(resolve('src/templates/layout.html'), 'utf-8');
+  const contentTemplatePath = resolve(`src/templates/${page.template}.html`);
+  let content = existsSync(contentTemplatePath) ? readFileSync(contentTemplatePath, 'utf-8') : '';
+
+  // 1. Process Page-Specific Replacements
+  if (page.template === 'homepage') {
+    const title = isEn ? data.homepage.titleEn : data.homepage.titleDe;
+    const subtitle = isEn ? data.homepage.subtitleEn : data.homepage.subtitleDe;
+    const stmt = isEn ? data.homepage.statementEn : data.homepage.statementDe;
+    
+    // Fallback image url
+    const fallbackUrl = getImageUrl(data.homepage.fallbackImage, 1200) || `${prefix}assets/images/05_SHIFTs28_Neon_Acryliconcanvas_190x250cm_2019-scaled.jpg`;
+    
+    content = content
+        .replace('{{TITLE}}', title || 'Alex Kiessling')
+        .replace('{{SUBTITLE}}', subtitle || '')
+        .replace('{{FALLBACK_IMAGE}}', fallbackUrl)
+        .replace('{{VIDEO_PATH}}', data.homepage.videoPath || '')
+        .replace('{{STATEMENT}}', formatTextToHtml(stmt));
+  }
+  
+  else if (page.template === 'gallery') {
+    // Generate category tabs
+    const categories = ['All', 'Real', 'shifts1', 'shifts2', 'Headspins', 'Heads', 'water', 'print editions', 'Drawings', 'sculptures', 'long Distance Art'];
+    const tabsHtml = categories.map(cat => {
+      const displayCat = cat === 'All' ? (isEn ? 'All Works' : 'Alle Werke') : cat;
+      const activeClass = cat === 'All' ? 'class="active"' : '';
+      return `<button ${activeClass} data-filter="${cat}">${displayCat}</button>`;
+    }).join('\n');
+
+    // Generate artwork items grid
+    const itemsHtml = data.artworks.map(art => {
+      const imgUrl = getImageUrl(art.image, 800);
+      const fullUrl = getImageUrl(art.image, 2000);
+      const title = art.title || 'Untitled';
+      const year = art.year || '2025';
+      const dim = art.dimensions || '';
+      const technique = isEn ? (art.techniqueEn || art.techniqueDe) : (art.techniqueDe || art.techniqueEn);
+      
+      // In-situ views
+      const inSituUrls = (art.inSituImages || []).map(img => getImageUrl(img, 1600)).join(',');
+      
+      return `
+      <div class="gallery-item-card reveal-on-scroll" data-category="${art.category || 'Real'}" data-year="${year}" data-dimensions="${dim}" data-technique="${technique}" data-insitu="${inSituUrls}" data-full="${fullUrl}">
+        <div class="gallery-image-wrapper">
+          <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
+          <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
+          <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
+          <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy">
+          <div class="mobile-lens-indicator"></div>
+        </div>
+        <div class="gallery-item-label">
+          <div class="label-title">${title}</div>
+          <div class="label-meta">${year} — ${technique} — ${dim}</div>
+        </div>
+      </div>`;
+    }).join('\n');
+
+    content = content
+        .replace('{{TABS}}', tabsHtml)
+        .replace('{{ARTWORKS_GRID}}', itemsHtml);
+  }
+  
+  else if (page.template === 'vita') {
+    const timelineHtml = data.vita.map(item => {
+      const desc = isEn ? (item.descriptionEn || item.descriptionDe) : (item.descriptionDe || item.descriptionEn);
+      return `
+      <div class="timeline-row reveal-on-scroll">
+        <div class="timeline-year">${item.year}</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <h4 class="timeline-title">${item.title}</h4>
+          <p class="timeline-desc">${desc || ''}</p>
+        </div>
+      </div>`;
+    }).join('\n');
+
+    content = content.replace('{{TIMELINE}}', timelineHtml);
+  }
+  
+  else if (page.template === 'statement') {
+    const stmt = isEn ? data.homepage.statementEn : data.homepage.statementDe;
+    content = content.replace('{{STATEMENT}}', formatTextToHtml(stmt));
+  }
+  
+  else if (page.template === 'gt') {
+    const descText = isEn ? (data.footer.gtCooperationTextEn || data.footer.gtCooperationTextDe) : data.footer.gtCooperationTextDe;
+    const verificationText = data.footer.gtVerification || '';
+    content = content
+        .replace('{{GT_COOPERATION_TEXT}}', formatTextToHtml(descText))
+        .replace('{{NFT_VERIFICATION}}', formatTextToHtml(verificationText));
+  }
+  
+  else if (page.template === 'privacy') {
+    const impressum = isEn ? data.footer.impressumEn : data.footer.impressumDe;
+    const privacy = isEn ? data.footer.privacyEn : data.footer.privacyDe;
+    content = content
+        .replace('{{IMPRESSUM}}', formatTextToHtml(impressum))
+        .replace('{{PRIVACY}}', formatTextToHtml(privacy));
+  }
+
+  // 2. Assemble Layout
+  let htmlResult = layout
+      .replace('<!-- CONTENT -->', content)
+      .replace('<html lang="de">', `<html lang="${lang}">`)
+      .replace('{{PAGE_TITLE}}', isEn ? `${page.titleEn} — Alex Kiessling` : `${page.titleDe} — Alex Kiessling`)
+      .replace(/\{\{PREFIX\}\}/g, prefix);
+
+  // 3. Process Header Toggles (Active states and DE/EN redirects)
+  const menuLinks = [
+    { key: 'gallery', path: 'gallery/' },
+    { key: 'vita', path: 'vita/' },
+    { key: 'statement', path: 'statement/' },
+    { key: 'alexkiesslingxgt', path: 'alexkiesslingxgt/' }
+  ];
+  
+  // Set language toggle link target
+  const deTarget = isEn ? `${enRelativePrefix}${page.file === 'index.html' ? '' : page.file.replace('index.html', '')}` : `./`;
+  const enTarget = isEn ? `./` : `${relativePrefix}en/${page.file === 'index.html' ? '' : page.file.replace('index.html', '')}`;
+  
+  htmlResult = htmlResult
+      .replace('{{LANG_DE_LINK}}', deTarget)
+      .replace('{{LANG_EN_LINK}}', enTarget)
+      .replace('{{LANG_DE_ACTIVE}}', isEn ? '' : 'class="active"')
+      .replace('{{LANG_EN_ACTIVE}}', isEn ? 'class="active"' : '');
+
+  // Add active classes to menu items
+  menuLinks.forEach(link => {
+    const isActive = page.file.startsWith(link.path);
+    htmlResult = htmlResult.replace(`{{ACTIVE_${link.key.toUpperCase()}}}`, isActive ? 'class="active"' : '');
+  });
+
+  // 4. Footer contact & copyright info replacement
+  htmlResult = htmlResult
+      .replace('{{CONTACT_EMAIL}}', data.footer.email || 'office@alexkiessling.com')
+      .replace('{{INSTAGRAM_LINK}}', data.footer.instagramUrl || 'https://www.instagram.com/alexkiessling/')
+      .replace('{{FACEBOOK_LINK}}', data.footer.facebookUrl || 'https://de-de.facebook.com/pages/category/Artist/ALEX-KIESSLING-236103737238/')
+      .replace('{{YOUTUBE_LINK}}', data.footer.youtubeChannelUrl || 'https://www.youtube.com/user/alexkieszling')
+      .replace('{{RARIBLE_LINK}}', data.footer.raribleUrl || 'https://rarible.com/alexkiessling');
+
+  writeFileSync(destPath, htmlResult, 'utf-8');
+  console.log(`✅ File written: ${destPath}`);
+}
+
+sync().catch(err => {
+  console.error('❌ Sync script failure:', err);
+  process.exit(1);
+});

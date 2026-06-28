@@ -1,0 +1,18 @@
+{
+  "name": "alex-kiessling-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run sync && vite",
+    "build": "npm run sync && vite build",
+    "preview": "vite preview",
+    "sync": "node scripts/sync-content.js",
+    "import-content": "node scripts/import-local-content.js"
+  },
+  "devDependencies": {
+    "@sanity/client": "^7.23.0",
+    "dotenv": "^17.4.2",
+    "vite": "^5.2.11"
+  }
+}

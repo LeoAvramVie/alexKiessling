@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}}</title>
+  <meta name="description" content="Alex Kiessling is an Painting, Graphic, Sculpture to 3D, Video and Photography Artist from Vienna, Austria.">
+  
+  <!-- Local Font Preloads -->
+  <link rel="preload" href="{{PREFIX}}src/assets/fonts/cormorant-garamond-v16-latin-normal-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{PREFIX}}src/assets/fonts/cormorant-garamond-v16-latin-normal-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{PREFIX}}src/assets/fonts/space-grotesk-v16-latin-normal-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{PREFIX}}src/assets/fonts/space-grotesk-v16-latin-normal-700.woff2" as="font" type="font/woff2" crossorigin>
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="{{PREFIX}}src/css/style.css">
+</head>
+<body>
+
+  <!-- Background Lines (White Cube Architecture Grid) -->
+  <div class="gallery-lines">
+    <div class="gallery-line"></div>
+    <div class="gallery-line"></div>
+    <div class="gallery-line"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="header-container">
+      <!-- Logo signature -->
+      <a href="{{PREFIX}}index.html" class="logo">alex kiessling</a>
+      
+      <!-- Mobile Burger Menu -->
+      <button class="burger-menu-btn" aria-label="Toggle Navigation">
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav">
+        <div class="nav-links">
+          <a href="{{PREFIX}}gallery/index.html" {{ACTIVE_GALLERY}}>
+            <span class="lang-de">Galerie</span>
+            <span class="lang-en">Gallery</span>
+          </a>
+          <a href="{{PREFIX}}vita/index.html" {{ACTIVE_VITA}}>
+            <span class="lang-de">Vita</span>
+            <span class="lang-en">Vita</span>
+          </a>
+          <a href="{{PREFIX}}statement/index.html" {{ACTIVE_STATEMENT}}>
+            <span class="lang-de">Statement</span>
+            <span class="lang-en">Statement</span>
+          </a>
+          <a href="{{PREFIX}}alexkiesslingxgt/index.html" {{ACTIVE_ALEXKIESSLINGXGT}}>
+            <span class="lang-de">alexkiesslingxGT</span>
+            <span class="lang-en">alexkiesslingxGT</span>
+          </a>
+        </div>
+        
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+          <a href="{{LANG_DE_LINK}}" {{LANG_DE_ACTIVE}}>DE</a>
+          <span class="lang-separator">|</span>
+          <a href="{{LANG_EN_LINK}}" {{LANG_EN_ACTIVE}}>EN</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Viewport -->
+  <main class="main-viewport">
+    <!-- CONTENT -->
+  </main>
+
+  <!-- Footer & Contact Cards -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Contact Block -->
+        <div class="footer-block block-contact">
+          <h4 class="footer-block-title">
+            <span class="lang-de">Kontakt</span>
+            <span class="lang-en">Contact</span>
+          </h4>
+          <a href="mailto:{{CONTACT_EMAIL}}" class="contact-email">{{CONTACT_EMAIL}}</a>
+          <p class="contact-hint">
+            <span class="lang-de">Für Preisanfragen und Studiobesuche kontaktieren Sie uns bitte direkt per E-Mail.</span>
+            <span class="lang-en">For price inquiries and studio visits, please contact us directly via email.</span>
+          </p>
+        </div>
+
+        <!-- Social Grid -->
+        <div class="footer-block block-socials">
+          <h4 class="footer-block-title">
+            <span class="lang-de">Folgen</span>
+            <span class="lang-en">Follow</span>
+          </h4>
+          <div class="social-links-grid">
+            <a href="{{INSTAGRAM_LINK}}" target="_blank" rel="noopener">Instagram</a>
+            <a href="{{FACEBOOK_LINK}}" target="_blank" rel="noopener">Facebook</a>
+            <a href="{{YOUTUBE_LINK}}" target="_blank" rel="noopener">YouTube</a>
+            <a href="{{RARIBLE_LINK}}" target="_blank" rel="noopener">Rarible (NFT)</a>
+          </div>
+        </div>
+
+        <!-- Copyright / Legal -->
+        <div class="footer-block block-legal">
+          <h4 class="footer-block-title">
+            <span class="lang-de">Rechtliches</span>
+            <span class="lang-en">Legal</span>
+          </h4>
+          <div class="legal-links">
+            <a href="{{PREFIX}}privacy/index.html">
+              <span class="lang-de">Datenschutz & Impressum</span>
+              <span class="lang-en">Privacy & Imprint</span>
+            </a>
+          </div>
+          <p class="copyright">&copy; 2026 Alex Kiessling. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Frontend Logic Modules -->
+  <script type="module" src="{{PREFIX}}src/js/main.js"></script>
+</body>
+</html>

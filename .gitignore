@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Production builds
+dist/
+
+# Local env files
+.env
+.env.local
+
+# Sanity cache
+src/sanity-cache.json
+
+# System files
+.DS_Store
+*.log

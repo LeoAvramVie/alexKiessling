@@ -1,0 +1,36 @@
+<!-- Hero Section with Background Video Loop -->
+<section class="hero-section">
+  <div class="hero-video-container" data-video-src="{{VIDEO_PATH}}" data-fallback-src="{{FALLBACK_IMAGE}}">
+    <!-- fallback background set by JS, video injected by JS -->
+  </div>
+  <div class="hero-overlay-curtain"></div>
+  
+  <div class="hero-content-container">
+    <div class="hero-text-align">
+      <h1 class="hero-title-anim">{{TITLE}}</h1>
+      <p class="hero-subtitle-anim">{{SUBTITLE}}</p>
+      <div class="hero-scroll-indicator">
+        <span class="scroll-arrow"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Immersive Statement Section -->
+<section class="home-statement-section container">
+  <div class="white-cube-divider"></div>
+  <div class="statement-grid">
+    <div class="statement-title-col reveal-on-scroll">
+      <h2>Statement</h2>
+    </div>
+    <div class="statement-text-col reveal-on-scroll">
+      <div class="rich-text-content">
+        {{STATEMENT}}
+      </div>
+      <a href="{{PREFIX}}statement/index.html" class="gallery-text-link">
+        <span class="lang-de">Mehr lesen →</span>
+        <span class="lang-en">Read more →</span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,103 @@
+<section class="gallery-page-section">
+  <div class="gallery-header container">
+    <h1 class="page-title reveal-on-scroll">
+      <span class="lang-de">Ausstellung & Galerie</span>
+      <span class="lang-en">Exhibition & Gallery</span>
+    </h1>
+    <p class="gallery-intro reveal-on-scroll">
+      <span class="lang-de">Entdecken Sie Alex Kiesslings Gemälde, Zeichnungen und Skulpturen. Nutzen Sie die Filter, um zwischen den Werkzyklen zu wechseln.</span>
+      <span class="lang-en">Explore Alex Kiessling\'s paintings, drawings, and sculptures. Use the filters to browse through different artwork series.</span>
+    </p>
+    
+    <!-- Filter Tabs (compiled dynamically) -->
+    <div class="filter-tabs-wrapper reveal-on-scroll">
+      <div class="filter-tabs-container">
+        {{TABS}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Grid -->
+  <div class="gallery-grid-viewport container">
+    <div class="gallery-masonry-grid">
+      {{ARTWORKS_GRID}}
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal Viewport (Room View / Scale Silhouette) -->
+<div class="lightbox-modal" aria-hidden="true" role="dialog">
+  <button class="lightbox-close-btn" aria-label="Close Lightbox">&times;</button>
+  
+  <div class="lightbox-content-wrapper">
+    <!-- Image Panel -->
+    <div class="lightbox-image-panel">
+      <div class="lightbox-main-view">
+        <img class="lightbox-active-img" src="" alt="">
+        <!-- Lens magnification loupe on mobile/touch -->
+        <div class="lightbox-lens-loupe"></div>
+      </div>
+      
+      <!-- In-Situ Carousel Dots -->
+      <div class="lightbox-carousel-controls">
+        <button class="carousel-dot active" data-index="0"></button>
+      </div>
+    </div>
+
+    <!-- Details Sidebar -->
+    <div class="lightbox-details-sidebar">
+      <h3 class="lightbox-title">Artwork Title</h3>
+      
+      <!-- Technical specs labels (technical monospace style) -->
+      <div class="lightbox-spec-sheet">
+        <div class="spec-row">
+          <span class="spec-label">Year:</span>
+          <span class="spec-val val-year">2025</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Medium:</span>
+          <span class="spec-val val-medium">Acrylic on Canvas</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Dimensions:</span>
+          <span class="spec-val val-dimensions">140x140cm</span>
+        </div>
+      </div>
+
+      <div class="lightbox-divider"></div>
+
+      <!-- Action Toggles -->
+      <div class="lightbox-actions-panel">
+        <!-- Room scale visualization trigger -->
+        <button class="btn btn-action-outline scale-toggle-btn">
+          <span class="lang-de">Größenvergleich</span>
+          <span class="lang-en">Compare Scale</span>
+        </button>
+        <!-- View details / room images toggle -->
+        <button class="btn btn-action-outline insitu-toggle-btn" style="display: none;">
+          <span class="lang-de">Raumansicht</span>
+          <span class="lang-en">Room View</span>
+        </button>
+      </div>
+      
+      <!-- Scale Compare Visualizer Widget -->
+      <div class="scale-visualizer-container" style="display: none;">
+        <div class="scale-visualizer-stage">
+          <!-- Stylized human vector -->
+          <div class="vector-silhouette vector-human">
+            <svg viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15c4.4 0 8-3.6 8-8s-3.6-8-8-8-8 3.6-8 8 3.6 8 8 8zm12 18H38c-5.5 0-10 4.5-10 10v45h8V38h4v152h20V38h4v50h8V43c0-5.5-4.5-10-10-10z" fill="currentColor"/>
+            </svg>
+            <span class="vector-label">175 cm</span>
+          </div>
+          
+          <!-- Scaled Artwork frame -->
+          <div class="vector-artwork-frame">
+            <div class="vector-artwork-canvas"></div>
+            <span class="vector-artwork-label">140x140 cm</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
