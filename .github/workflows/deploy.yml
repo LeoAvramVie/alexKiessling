@@ -1,11 +1,6 @@
 name: Deploy to World4You Webspace
 
 on:
-  push:
-    branches:
-      - main
-  repository_dispatch:
-    types: [sanity-content-update]
   workflow_dispatch:
 
 permissions:
