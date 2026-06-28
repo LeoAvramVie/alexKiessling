@@ -81,6 +81,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Make statement images/wrappers interactive: clicking them expands/collapses the text
+  const statementImages = document.querySelectorAll('.statement-image-wrapper, .statement-card-img');
+  statementImages.forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      const card = img.closest('.statement-item');
+      if (card) {
+        const btn = card.querySelector('.btn-read-more');
+        if (btn) {
+          btn.click();
+        }
+      }
+    });
+  });
+
   // --- 7. VITA TIMELINE SLIDER CONTROLS ---
   const sliderContainer = document.querySelector('.vita-highlights-container');
   if (sliderContainer) {

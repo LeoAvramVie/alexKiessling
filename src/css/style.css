@@ -2299,13 +2299,22 @@ body.menu-open .header {
   .statement-item {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
+    padding: 1.5rem 1.1rem;
   }
 
   .statement-meta-row {
     position: static;
   }
 
-  .statement-body-text {
+  .statement-item-title {
+    font-size: 1.6rem;
+  }
+
+  .statement-body-text,
+  .statement-body-text p {
+    font-size: 0.98rem;
+    text-align: left;
+    line-height: 1.6;
   }
 }
 
