@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'oboaxji6';
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'vlyuixi5';
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production';
 
 const client = createClient({

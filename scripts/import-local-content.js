@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const token = process.env.SANITY_WRITE_TOKEN;
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'oboaxji6';
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'vlyuixi5';
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production';
 
 if (!token) {
