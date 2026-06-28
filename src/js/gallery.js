@@ -136,14 +136,24 @@ export function initGallery() {
       // Dimensions format example: "140x140cm" or "200x230cm"
       let widthCm = 100;
       let heightCm = 100;
-      const dimMatch = dim.match(/(\d+)\s*[xX]\s*(\d+)/);
+      const dimMatch = dim ? dim.match(/(\d+)\s*[xX]\s*(\d+)/) : null;
       if (dimMatch) {
         widthCm = parseInt(dimMatch[1]);
         heightCm = parseInt(dimMatch[2]);
       }
 
-      // Base visual scale: 1cm = 0.6px in the visualizer stage
-      const scaleFactor = 0.6;
+      // Dynamic scale factor to prevent overflowing the 200px stage height.
+      // Silhouette height is 175cm. We want both silhouette and artwork to fit within 160px max height.
+      const maxHeightCm = Math.max(175, heightCm);
+      const scaleFactor = 160 / maxHeightCm;
+
+      // Update silhouette height dynamically
+      const vectorSilhouette = lightbox.querySelector('.vector-silhouette');
+      if (vectorSilhouette) {
+        vectorSilhouette.style.height = `${175 * scaleFactor}px`;
+      }
+
+      // Set canvas size dynamically
       vectorCanvas.style.width = `${widthCm * scaleFactor}px`;
       vectorCanvas.style.height = `${heightCm * scaleFactor}px`;
       vectorCanvas.style.backgroundImage = `url('${fullImgUrl}')`;

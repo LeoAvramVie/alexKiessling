@@ -1910,6 +1910,7 @@ body.menu-open .header {
   gap: var(--spacing-md);
   border-bottom: 1px solid var(--border-light);
   padding-bottom: var(--spacing-xs);
+  overflow: hidden;
 }
 
 .vector-silhouette {
