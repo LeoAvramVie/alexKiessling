@@ -51,6 +51,36 @@ export default {
       title: 'Artist Statement (EN)',
       type: 'text',
       description: 'Der englische Text von Alex Kiessling.'
+    },
+    {
+      name: 'bgArt1',
+      title: 'Hintergrund-Wasserzeichen 1',
+      type: 'image',
+      description: 'Erstes ambient Kunstwerk im Hintergrund.',
+      options: { hotspot: true }
+    },
+    {
+      name: 'bgArt2',
+      title: 'Hintergrund-Wasserzeichen 2',
+      type: 'image',
+      description: 'Zweites ambient Kunstwerk im Hintergrund.',
+      options: { hotspot: true }
+    },
+    {
+      name: 'bgArt3',
+      title: 'Hintergrund-Wasserzeichen 3',
+      type: 'image',
+      description: 'Drittes ambient Kunstwerk im Hintergrund.',
+      options: { hotspot: true }
+    },
+    {
+      name: 'videoFile',
+      title: 'Hintergrundvideo (Datei-Upload)',
+      type: 'file',
+      description: 'Optional. Lade eine eigene WebM/MP4-Videodatei hoch (überschreibt den obigen Pfad).',
+      options: {
+        accept: 'video/*'
+      }
     }
   ]
 }

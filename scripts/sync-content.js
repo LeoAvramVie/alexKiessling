@@ -53,7 +53,10 @@ async function sync() {
   try {
     console.log('📡 Fetching from Sanity API...');
     const result = await client.fetch(`{
-      "homepage": *[_type == "homepage" && _id == "homepage"][0],
+      "homepage": *[_type == "homepage" && _id == "homepage"][0]{
+        ...,
+        "videoFileUrl": videoFile.asset->url
+      },
       "footer": *[_type == "footer" && _id == "footer"][0],
       "artworks": *[_type == "artwork"] | order(year desc, _createdAt desc),
       "vitaHighlights": *[_type == "vitaHighlight"] | order(order asc),
@@ -333,13 +336,21 @@ function compilePage(page, data, lang) {
         .replace('{{PRIVACY}}', formatTextToHtml(privacy));
   }
 
+  // Background watermarks from Sanity with local fallbacks
+  const bgArt1Url = getImageUrl(data.homepage.bgArt1, 1600) || `${prefix}assets/images/05_SHIFTs28_Neon_Acryliconcanvas_190x250cm_2019-scaled.jpg`;
+  const bgArt2Url = getImageUrl(data.homepage.bgArt2, 1600) || `${prefix}assets/images/04_REALzoon_politicon_Acryliconcanvas_200x200cm_2016-scaled.jpg`;
+  const bgArt3Url = getImageUrl(data.homepage.bgArt3, 1600) || `${prefix}assets/images/07_WATERShift_paul_watercolor_on_paper_framed_50x60cm_2014-scaled.jpg`;
+
   // 2. Assemble Layout
   let htmlResult = layout
       .replace('<!-- CONTENT -->', content)
       .replace('<body>', `<body class="${page.template === 'homepage' ? 'page-homepage' : 'page-subpage'}">`)
       .replace('<html lang="de">', `<html lang="${lang}">`)
       .replace('{{PAGE_TITLE}}', isEn ? `${page.titleEn} — Alex Kiessling` : `${page.titleDe} — Alex Kiessling`)
-      .replace(/\{\{PREFIX\}\}/g, prefix);
+      .replace(/\{\{PREFIX\}\}/g, prefix)
+      .replace('{{BG_ART_1}}', bgArt1Url)
+      .replace('{{BG_ART_2}}', bgArt2Url)
+      .replace('{{BG_ART_3}}', bgArt3Url);
 
   // 3. Process Header Toggles (Active states and DE/EN redirects)
   const menuLinks = [
