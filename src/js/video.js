@@ -2,14 +2,12 @@ export function initBackgroundVideo(videoPath, fallbackImagePath) {
   const container = document.querySelector('.hero-video-container');
   if (!container) return;
 
-  // Set fallback image by default
-  container.style.backgroundImage = `url(${fallbackImagePath})`;
-
   // Check device type
   const isMobile = window.innerWidth <= 768;
 
-  // If mobile, do not load background video to preserve performance
+  // If mobile, set static fallback image and exit
   if (isMobile) {
+    container.style.backgroundImage = `url(${fallbackImagePath})`;
     console.log('Mobile device detected. Keeping static fallback image.');
     return;
   }
