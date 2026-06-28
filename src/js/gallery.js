@@ -147,9 +147,11 @@ export function initGallery() {
   const lens = lightbox.querySelector('.lightbox-lens-loupe');
 
   let activeCard = null;
+  let lastScrollY = 0;
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
+      lastScrollY = window.scrollY; // Capture scroll position before modifying body classes
       activeCard = card;
       const fullImgUrl = card.getAttribute('data-full');
       const title = card.querySelector('.label-title').textContent;
@@ -210,6 +212,7 @@ export function initGallery() {
       lightbox.classList.add('open');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.classList.add('lightbox-open');
+      document.body.style.top = `-${lastScrollY}px`; // Freeze body scroll position
 
       // Init Touch Magnification & Gyro scope
       initMobileLoupe(lightboxImg, lens);
@@ -223,6 +226,8 @@ export function initGallery() {
     lightbox.classList.remove('no-details');
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lightbox-open');
+    document.body.style.top = ''; // Reset body positioning
+    window.scrollTo(0, lastScrollY); // Restore scroll position instantly
     lightboxImg.src = '';
     // Stop listening to gyroscope
     if (gyroActive) {
