@@ -129,7 +129,7 @@ export function initGallery() {
       lightboxDim.textContent = dim || 'K.A.';
 
       // Reset Scale Widget State
-      scaleContainer.style.display = 'none';
+      scaleContainer.classList.remove('visible');
       scaleToggle.classList.remove('active');
 
       // Setup Scale Visualizer values
@@ -196,7 +196,7 @@ export function initGallery() {
   // Toggle Scale Widget
   scaleToggle.addEventListener('click', () => {
     const active = scaleToggle.classList.toggle('active');
-    scaleContainer.style.display = active ? 'block' : 'none';
+    scaleContainer.classList.toggle('visible', active);
   });
 
   // Expand mobile bottom sheet on touch drag
