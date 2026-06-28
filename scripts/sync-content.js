@@ -206,7 +206,7 @@ function compilePage(page, data, lang) {
             <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
             <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
             <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
-            <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy">
+            <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy" decoding="async">
             <div class="mobile-lens-indicator"></div>
           </div>
           <div class="gallery-item-label">
@@ -229,7 +229,7 @@ function compilePage(page, data, lang) {
       const desc = isEn ? (item.descriptionEn || item.descriptionDe) : (item.descriptionDe || item.descriptionEn);
       const imageBlock = imgUrl ? `
         <div class="slider-image-wrapper">
-          <img src="${imgUrl}" alt="${item.title}" loading="lazy">
+          <img src="${imgUrl}" alt="${item.title}" loading="lazy" decoding="async">
         </div>
       ` : '';
       return `
@@ -304,7 +304,7 @@ function compilePage(page, data, lang) {
         <div class="statement-item reveal-on-scroll has-image ${isLong ? 'collapsable' : ''}">
           <div class="statement-image-col">
             <div class="statement-image-wrapper">
-              <img src="${imgUrl}" alt="${stmt.title || ''}" class="statement-card-img" loading="lazy">
+              <img src="${imgUrl}" alt="${stmt.title || ''}" class="statement-card-img" loading="lazy" decoding="async">
             </div>
           </div>
           <div class="statement-content-col">
@@ -347,7 +347,7 @@ function compilePage(page, data, lang) {
           <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
           <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
           <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
-          <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy">
+          <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy" decoding="async">
           <div class="mobile-lens-indicator"></div>
         </div>
         <div class="gallery-item-label">
