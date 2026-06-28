@@ -24,9 +24,9 @@ export default defineConfig({
                     .id('homepage')
                     .child(S.document().schemaType('homepage').documentId('homepage')),
                 S.listItem()
-                    .title('Galerie Kategorien (Zyklen)')
+                    .title('Werke & Galerie (Zyklen)')
                     .id('category')
-                    .child(S.documentTypeList('category').title('Alle Kategorien')),
+                    .child(S.documentTypeList('category').title('Alle Zyklen')),
                 S.listItem()
                     .title('Vita-Highlights (Top Slider)')
                     .id('vitaHighlight')
