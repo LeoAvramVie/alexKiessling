@@ -2132,22 +2132,23 @@ body.menu-open .header {
 
   .nav {
     /* Inherit global full screen overlay properties, reset positioning */
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.96); /* Slightly more solid overlay on mobile */
-    border-radius: 0; /* Reset rounded corners on mobile full screen */
-    border: none; /* Reset card borders on mobile full screen */
-    box-shadow: none; /* Reset card shadows on mobile */
-    padding: clamp(2rem, 6vh, 6rem) 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center horizontally on mobile */
-    justify-content: center; /* Center vertically on mobile */
-    gap: clamp(1rem, 2.5vh, 3rem);
-    overflow: hidden; /* Absolutely prevent scroll on mobile */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: clamp(2rem, 6vh, 6rem) 2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(1rem, 2.5vh, 3rem) !important;
+    overflow: hidden !important;
+    transform: none !important; /* Reset scale/translate transforms on mobile */
   }
 
   .menu-logo-link {
