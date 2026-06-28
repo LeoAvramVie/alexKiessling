@@ -2485,8 +2485,8 @@ body.menu-open .header {
     border-radius: 0 !important;
     box-shadow: none !important;
     z-index: 10 !important;
-    overflow-y: auto !important;
-    padding: 1.2rem 1rem !important;
+    overflow: hidden !important;
+    padding: 1rem 1rem !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     perspective: none !important;
@@ -2494,9 +2494,31 @@ body.menu-open .header {
   }
 
   .lightbox-title {
-    font-size: 1.2rem !important;
-    margin-bottom: var(--spacing-xs) !important;
+    font-size: 1.15rem !important;
+    margin-bottom: 0.3rem !important;
     line-height: 1.2 !important;
+  }
+
+  .lightbox-spec-sheet {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.3rem 0.6rem !important;
+    margin-top: 0.3rem !important;
+  }
+
+  .spec-row {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    gap: 0.2rem !important;
+    align-items: center !important;
+    display: inline-flex !important;
+  }
+
+  .spec-row:not(:last-child)::after {
+    content: "•";
+    margin-left: 0.6rem;
+    color: var(--text-slate);
+    opacity: 0.4;
   }
 
   .scale-visualizer-container {
