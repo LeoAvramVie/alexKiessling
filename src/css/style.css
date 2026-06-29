@@ -2082,31 +2082,44 @@ body.menu-open .header-socials {
 
 .lightbox-actions-panel {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
+  margin-top: var(--spacing-sm);
 }
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   background: none;
   border: 1px solid var(--text-ink);
   border-radius: 30px;
-  padding: 0.6rem 1.6rem;
+  padding: 0.8rem 1.6rem;
   font-family: var(--font-headings);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
   transition: var(--transition-fast);
+  text-align: center;
 }
 
 .btn-primary {
   background-color: var(--text-ink);
-  color: #ffffff;
+  color: var(--bg-card);
+  border-color: var(--text-ink);
 }
 
 .btn-primary:hover {
-  background-color: var(--bg-backdrop);
+  background-color: transparent;
   color: var(--text-ink);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+}
+
+.lightbox-inquiry-btn {
+  width: 100%;
 }
 
 .btn-action-outline {

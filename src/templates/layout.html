@@ -7,8 +7,10 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>{{PAGE_TITLE}}</title>
-  <meta name="description" content="Alex Kiessling is an Painting, Graphic, Sculpture to 3D, Video and Photography Artist from Vienna, Austria.">
+  <meta name="description" content="{{META_DESCRIPTION}}">
   {{LCP_PRELOAD}}
+  {{CANONICAL_LINK}}
+  {{HREFLANG_TAGS}}
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="{{PREFIX}}assets/images/cropped-logoalex-1.png">
@@ -17,14 +19,16 @@
   <!-- Open Graph / Facebook / WhatsApp Preview -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{PAGE_TITLE}}">
-  <meta property="og:description" content="Alex Kiessling is an Painting, Graphic, Sculpture to 3D, Video and Photography Artist from Vienna, Austria.">
+  <meta property="og:description" content="{{META_DESCRIPTION}}">
   <meta property="og:image" content="{{PREFIX}}assets/images/cropped-logoalex-1.png">
   
   <!-- Twitter Preview -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{PAGE_TITLE}}">
-  <meta name="twitter:description" content="Alex Kiessling is an Painting, Graphic, Sculpture to 3D, Video and Photography Artist from Vienna, Austria.">
+  <meta name="twitter:description" content="{{META_DESCRIPTION}}">
   <meta name="twitter:image" content="{{PREFIX}}assets/images/cropped-logoalex-1.png">
+
+  {{STRUCTURED_DATA}}
   
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="{{PREFIX}}src/css/style.css">
@@ -228,6 +232,13 @@
         </div>
 
         <div class="lightbox-divider"></div>
+
+        <div class="lightbox-actions-panel">
+          <a href="#" class="btn btn-primary lightbox-inquiry-btn">
+            <span class="lang-de">Kaufanfrage zu diesem Werk</span>
+            <span class="lang-en">Inquire about this artwork</span>
+          </a>
+        </div>
 
       </div>
     </div>

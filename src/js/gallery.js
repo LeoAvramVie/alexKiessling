@@ -208,6 +208,26 @@ export function initGallery() {
       lightboxMedium.textContent = cleanMedium;
       lightboxDim.textContent = finalDim;
 
+      // Configure dynamic inquiry button mailto link
+      const inquiryBtn = lightbox.querySelector('.lightbox-inquiry-btn');
+      if (inquiryBtn) {
+        const email = 'info@alexkiessling.com';
+        const isEn = document.documentElement.lang === 'en';
+        
+        let subject = '';
+        let body = '';
+        
+        if (isEn) {
+          subject = encodeURIComponent(`Purchase inquiry: "${title}"`);
+          body = encodeURIComponent(`Dear Alex Kiessling,\n\nI am interested in your artwork "${title}" (${finalYear}, ${cleanMedium}, ${finalDim}).\nIs this artwork still available, and what is its price?\n\nBest regards,\n[Your Name]`);
+        } else {
+          subject = encodeURIComponent(`Kaufanfrage: "${title}"`);
+          body = encodeURIComponent(`Sehr geehrter Alex Kiessling,\n\nich interessiere mich für Ihr Kunstwerk "${title}" (${finalYear}, ${cleanMedium}, ${finalDim}).\nIst dieses Werk noch verfügbar bzw. wie hoch ist der Preis?\n\nMit freundlichen Grüßen,\n[Ihr Name]`);
+        }
+        
+        inquiryBtn.setAttribute('href', `mailto:${email}?subject=${subject}&body=${body}`);
+      }
+
       // Check if this card belongs to a project section to disable details panel
       const isProjectCard = !!card.closest('.projects-page-section');
       if (isProjectCard) {

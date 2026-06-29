@@ -143,13 +143,62 @@ async function sync() {
 
   // --- COMPILE PAGES ---
   const pages = [
-    { file: 'index.html', template: 'homepage', titleDe: 'Startseite', titleEn: 'Home' },
-    { file: 'gallery/index.html', template: 'gallery', titleDe: 'Galerie', titleEn: 'Gallery' },
-    { file: 'projects/index.html', template: 'projects', titleDe: 'Projekte', titleEn: 'Projects' },
-    { file: 'vita/index.html', template: 'vita', titleDe: 'Vita', titleEn: 'Vita' },
-    { file: 'statement/index.html', template: 'statement', titleDe: 'Statement', titleEn: 'Statement' },
-    { file: 'alexkiesslingxgt/index.html', template: 'gt', titleDe: 'alexkiesslingxGT', titleEn: 'alexkiesslingxGT' },
-    { file: 'privacy/index.html', template: 'privacy', titleDe: 'Datenschutz & Impressum', titleEn: 'Privacy & Imprint' }
+    {
+      file: 'index.html',
+      template: 'homepage',
+      titleDe: 'Alex Kiessling — Zeitgenössischer Bildender Künstler & Maler aus Wien',
+      titleEn: 'Alex Kiessling — Contemporary Visual Artist & Painter from Vienna',
+      descDe: 'Offizielle Website von Alex Kiessling. Zeitgenössische figurative Malerei, Zeichnungen & Skulpturen. Entdecken Sie die Serien Shifts, Zoon Politicon und Headspins.',
+      descEn: 'Official website of Alex Kiessling. Contemporary figurative paintings, drawings & sculptures. Discover the series Shifts, Zoon Politicon, and Headspins.'
+    },
+    {
+      file: 'gallery/index.html',
+      template: 'gallery',
+      titleDe: 'Galerie & Kunstwerke — Alex Kiessling',
+      titleEn: 'Gallery & Artworks — Alex Kiessling',
+      descDe: 'Entdecken Sie die Gemälde, Skulpturen und Zeichnungen von Alex Kiessling. Kontaktieren Sie das Atelier direkt für Kaufanfragen zu verfügbaren Werken.',
+      descEn: 'Explore the paintings, sculptures, and drawings of Alex Kiessling. Contact the studio directly for purchase inquiries on available artworks.'
+    },
+    {
+      file: 'projects/index.html',
+      template: 'projects',
+      titleDe: 'Kunstprojekte & Performances — Alex Kiessling',
+      titleEn: 'Art Projects & Performances — Alex Kiessling',
+      descDe: 'Erfahren Sie mehr über interdisziplinäre Projekte von Alex Kiessling, wie z.B. Long Distance Art (Satelliten-Performance zwischen Wien, Berlin und London).',
+      descEn: 'Learn more about interdisciplinary projects by Alex Kiessling, such as Long Distance Art (satellite performance between Vienna, Berlin, and London).'
+    },
+    {
+      file: 'vita/index.html',
+      template: 'vita',
+      titleDe: 'Biografie & Ausstellungen — Alex Kiessling',
+      titleEn: 'Biography & Exhibitions — Alex Kiessling',
+      descDe: 'Ausbildung, Ausstellungen, Kunstmessen und Auszeichnungen des Wiener Malers und Bildhauers Alex Kiessling. Vollständige Ausstellungsbiografie.',
+      descEn: 'Education, exhibitions, art fairs, and awards of the Vienna-based painter and sculptor Alex Kiessling. Complete exhibition biography.'
+    },
+    {
+      file: 'statement/index.html',
+      template: 'statement',
+      titleDe: 'Künstlerisches Statement & Essays — Alex Kiessling',
+      titleEn: 'Artist Statement & Essays — Alex Kiessling',
+      descDe: 'Künstlerisches Konzept, kunsthistorische Essays und Auseinandersetzung mit digitaler Bildverschiebung (Shifts), Träumen und der menschlichen Psyche.',
+      descEn: 'Artistic concept, art historical essays, and exploration of digital image shifting (Shifts), dreams, and the human psyche.'
+    },
+    {
+      file: 'alexkiesslingxgt/index.html',
+      template: 'gt',
+      titleDe: 'NFT Kunst & Digitale Kooperationen — Alex Kiessling',
+      titleEn: 'NFT Art & Digital Cooperations — Alex Kiessling',
+      descDe: 'Verifizierung und Details der digitalen NFT-Kunstwerke von Alex Kiessling in Zusammenarbeit mit xGT. Offizielle Rarible-Links.',
+      descEn: 'Verification and details of Alex Kiessling\'s digital NFT artworks in collaboration with xGT. Official Rarible links.'
+    },
+    {
+      file: 'privacy/index.html',
+      template: 'privacy',
+      titleDe: 'Impressum & Datenschutz — Alex Kiessling',
+      titleEn: 'Imprint & Privacy — Alex Kiessling',
+      descDe: 'Impressum und Datenschutzerklärung für die offizielle Portfolio-Website von Alex Kiessling, Bildender Künstler, Wien.',
+      descEn: 'Imprint and privacy policy for the official portfolio website of Alex Kiessling, visual artist, Vienna.'
+    }
   ];
 
   pages.forEach(page => {
@@ -158,6 +207,55 @@ async function sync() {
     // 2. Compile English (en)
     compilePage(page, data, 'en');
   });
+
+  // --- GENERATE SITEMAP.XML ---
+  const sitemapUrls = pages.flatMap(page => {
+    let cleanPath = page.file === 'index.html' ? '' : page.file.replace('index.html', '');
+    return [
+      `  <url>
+    <loc>https://www.alexkiessling.com/${cleanPath}</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/${cleanPath}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/${cleanPath}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/${cleanPath}"/>
+    <changefreq>weekly</changefreq>
+    <priority>${page.template === 'homepage' ? '1.0' : '0.8'}</priority>
+  </url>`,
+      `  <url>
+    <loc>https://www.alexkiessling.com/en/${cleanPath}</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/${cleanPath}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/${cleanPath}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/${cleanPath}"/>
+    <changefreq>weekly</changefreq>
+    <priority>${page.template === 'homepage' ? '0.9' : '0.7'}</priority>
+  </url>`
+    ];
+  });
+
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${sitemapUrls.join('\n')}
+</urlset>`;
+
+  try {
+    writeFileSync(resolve('public/sitemap.xml'), sitemapXml, 'utf-8');
+    console.log('✅ Generated sitemap.xml in public/');
+  } catch (err) {
+    console.error('❌ Failed to write sitemap.xml:', err.message);
+  }
+
+  // --- GENERATE ROBOTS.TXT ---
+  const robotsTxt = `User-agent: *
+Allow: /
+
+Sitemap: https://www.alexkiessling.com/sitemap.xml
+`;
+  try {
+    writeFileSync(resolve('public/robots.txt'), robotsTxt, 'utf-8');
+    console.log('✅ Generated robots.txt in public/');
+  } catch (err) {
+    console.error('❌ Failed to write robots.txt:', err.message);
+  }
 
   console.log('🎉 All pages compiled successfully in DE and EN!');
 }
@@ -405,12 +503,81 @@ function compilePage(page, data, lang) {
     }
   }
 
+  // 2b. Generate SEO & Canonical tags
+  const prodDomain = 'https://www.alexkiessling.com';
+  let cleanPath = page.file === 'index.html' ? '' : page.file.replace('index.html', '');
+  const canonicalDe = `${prodDomain}/${cleanPath}`;
+  const canonicalEn = `${prodDomain}/en/${cleanPath}`;
+  
+  const canonical = isEn ? canonicalEn : canonicalDe;
+  const canonicalHtml = `<link rel="canonical" href="${canonical}">`;
+  const hreflangHtml = `
+  <link rel="alternate" hreflang="de" href="${canonicalDe}">
+  <link rel="alternate" hreflang="en" href="${canonicalEn}">
+  <link rel="alternate" hreflang="x-default" href="${canonicalDe}">`;
+
+  // 2c. Generate Structured Data (JSON-LD)
+  let structuredDataHtml = '';
+  if (page.template === 'homepage') {
+    const personSchema = {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Alex Kiessling",
+      "url": "https://www.alexkiessling.com",
+      "image": "https://www.alexkiessling.com/assets/images/cropped-logoalex-1.png",
+      "sameAs": [
+        data.footer.instagramUrl || "https://www.instagram.com/alexkiessling/",
+        data.footer.facebookUrl || "https://de-de.facebook.com/pages/category/Artist/ALEX-KIESSLING-236103737238/",
+        data.footer.youtubeChannelUrl || "https://www.youtube.com/user/alexkieszling",
+        data.footer.raribleUrl || "https://rarible.com/alexkiessling"
+      ],
+      "jobTitle": isEn ? "Artist / Painter" : "Künstler / Maler",
+      "knowsAbout": ["Contemporary Art", "Painting", "Sculpture", "Fine Art", "Figurative Painting"],
+      "homeLocation": {
+        "@type": "Place",
+        "name": "Vienna, Austria"
+      }
+    };
+    structuredDataHtml = `<script type="application/ld+json">\n${JSON.stringify(personSchema, null, 2)}\n</script>`;
+  } else if (page.template === 'gallery' && data.artworks && data.artworks.length > 0) {
+    const artworkSchemas = data.artworks.slice(0, 15).map(art => {
+      const imgUrl = getImageUrl(art.image, 1200);
+      const title = art.title || 'Untitled';
+      const year = art.year || '2025';
+      const technique = isEn ? (art.techniqueEn || art.techniqueDe) : (art.techniqueDe || art.techniqueEn);
+      const dim = art.dimensions || '';
+      return {
+        "@context": "https://schema.org",
+        "@type": "VisualArtwork",
+        "name": title,
+        "image": imgUrl,
+        "creator": {
+          "@type": "Person",
+          "name": "Alex Kiessling"
+        },
+        "artMedium": technique,
+        "width": dim,
+        "dateCreated": year,
+        "description": isEn ? `Artwork "${title}" by artist Alex Kiessling` : `Kunstwerk "${title}" von Künstler Alex Kiessling`
+      };
+    });
+    const gallerySchema = {
+      "@context": "https://schema.org",
+      "@graph": artworkSchemas
+    };
+    structuredDataHtml = `<script type="application/ld+json">\n${JSON.stringify(gallerySchema, null, 2)}\n</script>`;
+  }
+
   // 3. Assemble Layout
   let htmlResult = layout
       .replace('<!-- CONTENT -->', content)
       .replace('<body>', `<body class="${page.template === 'homepage' ? 'page-homepage' : 'page-subpage'}">`)
       .replace('<html lang="de">', `<html lang="${lang}">`)
-      .replace('{{PAGE_TITLE}}', isEn ? `${page.titleEn} — Alex Kiessling` : `${page.titleDe} — Alex Kiessling`)
+      .replace(/\{\{PAGE_TITLE\}\}/g, isEn ? page.titleEn : page.titleDe)
+      .replace(/\{\{META_DESCRIPTION\}\}/g, isEn ? page.descEn : page.descDe)
+      .replace('{{CANONICAL_LINK}}', canonicalHtml)
+      .replace('{{HREFLANG_TAGS}}', hreflangHtml)
+      .replace('{{STRUCTURED_DATA}}', structuredDataHtml)
       .replace(/\{\{PREFIX\}\}/g, prefix)
       .replace(/\{\{LANG_PATH\}\}/g, isEn ? 'en/' : '')
       .replace('{{LCP_PRELOAD}}', lcpPreloadHtml)

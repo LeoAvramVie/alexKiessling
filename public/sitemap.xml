@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.alexkiessling.com/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/gallery/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/gallery/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/gallery/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/gallery/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/en/gallery/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/gallery/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/gallery/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/gallery/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/projects/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/projects/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/projects/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/projects/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/en/projects/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/projects/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/projects/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/projects/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/vita/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/vita/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/vita/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/vita/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/en/vita/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/vita/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/vita/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/vita/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/statement/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/statement/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/statement/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/statement/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/en/statement/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/statement/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/statement/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/statement/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/alexkiesslingxgt/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/alexkiesslingxgt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/alexkiesslingxgt/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/alexkiesslingxgt/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/en/alexkiesslingxgt/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/alexkiesslingxgt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/alexkiesslingxgt/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/alexkiesslingxgt/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/privacy/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alexkiessling.com/en/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.alexkiessling.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.alexkiessling.com/en/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alexkiessling.com/privacy/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>
