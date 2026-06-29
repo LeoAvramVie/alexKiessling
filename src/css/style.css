@@ -560,6 +560,12 @@ body.menu-open .header {
   -webkit-backdrop-filter: none !important;
 }
 
+body.menu-open .header-socials {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 /* --- 6. HERO STYLING (GLASS REFLECTION) --- */
 .hero-section {
   position: relative;
@@ -2271,6 +2277,7 @@ body.menu-open .header {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
   .header-socials a {
