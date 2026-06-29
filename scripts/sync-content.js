@@ -44,6 +44,44 @@ function getImageUrl(imageObj, maxWidth = 1600) {
   return `https://cdn.sanity.io/images/${projectId}/${dataset}/${id}-${dimensions}.${ext}?w=${targetWidth}&auto=format&q=80`;
 }
 
+// Helper to parse image dimensions from reference ID (for PageSpeed explicit width/height)
+function getImageDimensions(imageObj) {
+  if (!imageObj || !imageObj.asset || !imageObj.asset._ref) return { width: 800, height: 600 };
+  const ref = imageObj.asset._ref;
+  const parts = ref.split('-');
+  if (parts.length < 4) return { width: 800, height: 600 };
+  const dimensions = parts[2];
+  const [width, height] = dimensions.split('x').map(Number);
+  return { width: width || 800, height: height || 600 };
+}
+
+// Helper to render artwork card (used by both Gallery and Projects to prevent code duplication, and add keyboard focus)
+function renderArtworkCard(art, catSlug, isEn, prefix) {
+  const imgUrl = getImageUrl(art.image, 800);
+  const fullUrl = getImageUrl(art.image, 2000);
+  const title = art.title || 'Untitled';
+  const year = art.year || '2025';
+  const dim = art.dimensions || '';
+  const technique = isEn ? (art.techniqueEn || art.techniqueDe) : (art.techniqueDe || art.techniqueEn);
+  const inSituUrls = (art.inSituImages || []).map(img => getImageUrl(img, 1600)).join(',');
+  const { width, height } = getImageDimensions(art.image);
+
+  return `
+  <div class="gallery-item-card reveal-on-scroll" data-category="${catSlug}" data-year="${year}" data-dimensions="${dim}" data-technique="${technique}" data-insitu="${inSituUrls}" data-full="${fullUrl}" role="button" tabindex="0" aria-label="${title} — Detailansicht / Detail view">
+    <div class="gallery-image-wrapper">
+      <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
+      <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
+      <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
+      <img class="gallery-image" src="${imgUrl}" alt="${title}" width="${width}" height="${height}" loading="lazy" decoding="async">
+      <div class="mobile-lens-indicator"></div>
+    </div>
+    <div class="gallery-item-label">
+      <div class="label-title">${title}</div>
+      <div class="label-meta">${year} — ${technique} — ${dim}</div>
+    </div>
+  </div>`;
+}
+
 async function sync() {
   console.log('🔄 Syncing content from Sanity CMS...');
   
@@ -189,32 +227,7 @@ function compilePage(page, data, lang) {
 
     // Generate artwork items grid
     const itemsHtml = categoriesList.flatMap(cat => {
-      return (cat.artworks || []).map(art => {
-        const imgUrl = getImageUrl(art.image, 800);
-        const fullUrl = getImageUrl(art.image, 2000);
-        const title = art.title || 'Untitled';
-        const year = art.year || '2025';
-        const dim = art.dimensions || '';
-        const technique = isEn ? (art.techniqueEn || art.techniqueDe) : (art.techniqueDe || art.techniqueEn);
-        
-        // In-situ views
-        const inSituUrls = (art.inSituImages || []).map(img => getImageUrl(img, 1600)).join(',');
-        
-        return `
-        <div class="gallery-item-card reveal-on-scroll" data-category="${cat.slug}" data-year="${year}" data-dimensions="${dim}" data-technique="${technique}" data-insitu="${inSituUrls}" data-full="${fullUrl}">
-          <div class="gallery-image-wrapper">
-            <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
-            <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
-            <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
-            <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy" decoding="async">
-            <div class="mobile-lens-indicator"></div>
-          </div>
-          <div class="gallery-item-label">
-            <div class="label-title">${title}</div>
-            <div class="label-meta">${year} — ${technique} — ${dim}</div>
-          </div>
-        </div>`;
-      });
+      return (cat.artworks || []).map(art => renderArtworkCard(art, cat.slug, isEn, prefix));
     }).join('\n');
 
     content = content
@@ -333,28 +346,8 @@ function compilePage(page, data, lang) {
     );
 
     const itemsHtml = ldaArtworks.map(art => {
-      const imgUrl = getImageUrl(art.image, 800);
-      const fullUrl = getImageUrl(art.image, 2000);
-      const title = art.title || 'Untitled';
-      const year = art.year || '2013';
-      const dim = art.dimensions || '';
-      const technique = isEn ? (art.techniqueEn || art.techniqueDe) : (art.techniqueDe || art.techniqueEn);
-      const inSituUrls = (art.inSituImages || []).map(img => getImageUrl(img, 1600)).join(',');
-      
-      return `
-      <div class="gallery-item-card reveal-on-scroll" data-category="${art.category || 'long Distance Art'}" data-year="${year}" data-dimensions="${dim}" data-technique="${technique}" data-insitu="${inSituUrls}" data-full="${fullUrl}">
-        <div class="gallery-image-wrapper">
-          <div class="shift-layer shift-red" style="background-image: url('${imgUrl}');"></div>
-          <div class="shift-layer shift-green" style="background-image: url('${imgUrl}');"></div>
-          <div class="shift-layer shift-blue" style="background-image: url('${imgUrl}');"></div>
-          <img class="gallery-image" src="${imgUrl}" alt="${title}" loading="lazy" decoding="async">
-          <div class="mobile-lens-indicator"></div>
-        </div>
-        <div class="gallery-item-label">
-          <div class="label-title">${title}</div>
-          <div class="label-meta">${year} — ${technique} — ${dim}</div>
-        </div>
-      </div>`;
+      const catSlug = art.category || 'long-distance-art';
+      return renderArtworkCard(art, catSlug, isEn, prefix);
     }).join('\n');
 
     content = content.replace('{{LONG_DISTANCE_ART_GRID}}', itemsHtml);
@@ -381,7 +374,38 @@ function compilePage(page, data, lang) {
   const bgArt2Url = getImageUrl(data.homepage.bgArt2, 1600) || `${prefix}assets/images/04_REALzoon_politicon_Acryliconcanvas_200x200cm_2016-scaled.jpg`;
   const bgArt3Url = getImageUrl(data.homepage.bgArt3, 1600) || `${prefix}assets/images/07_WATERShift_paul_watercolor_on_paper_framed_50x60cm_2014-scaled.jpg`;
 
-  // 2. Assemble Layout
+  // 2. Compile LCP preloads (Google PageSpeed mobile LCP discovery optimization)
+  let lcpPreloadHtml = '';
+  if (page.template === 'homepage') {
+    const fallbackUrl = getImageUrl(data.homepage.fallbackImage, 1200) || `${prefix}assets/images/05_SHIFTs28_Neon_Acryliconcanvas_190x250cm_2019-scaled.jpg`;
+    lcpPreloadHtml = `<link rel="preload" as="image" href="${fallbackUrl}" fetchpriority="high">`;
+  } else if (page.template === 'gallery') {
+    const firstCat = data.categories && data.categories[0];
+    const firstArt = firstCat && firstCat.artworks && firstCat.artworks[0];
+    if (firstArt) {
+      const firstImgUrl = getImageUrl(firstArt.image, 800);
+      lcpPreloadHtml = `<link rel="preload" as="image" href="${firstImgUrl}" fetchpriority="high">`;
+    }
+  } else if (page.template === 'projects') {
+    const ldaCat = (data.categories || []).find(cat => 
+      cat.slug === 'long-distance-art' || cat.slug === 'long-Distance-Art' || cat.title.toLowerCase() === 'long distance art'
+    );
+    const ldaArtworks = ldaCat ? (ldaCat.artworks || []) : (data.artworks || []).filter(art => 
+      art.category && art.category.toLowerCase() === 'long distance art'
+    );
+    if (ldaArtworks && ldaArtworks[0]) {
+      const firstImgUrl = getImageUrl(ldaArtworks[0].image, 800);
+      lcpPreloadHtml = `<link rel="preload" as="image" href="${firstImgUrl}" fetchpriority="high">`;
+    }
+  } else if (page.template === 'vita') {
+    const firstHighlight = data.vitaHighlights && data.vitaHighlights[0];
+    if (firstHighlight && firstHighlight.image) {
+      const firstImgUrl = getImageUrl(firstHighlight.image, 800);
+      lcpPreloadHtml = `<link rel="preload" as="image" href="${firstImgUrl}" fetchpriority="high">`;
+    }
+  }
+
+  // 3. Assemble Layout
   let htmlResult = layout
       .replace('<!-- CONTENT -->', content)
       .replace('<body>', `<body class="${page.template === 'homepage' ? 'page-homepage' : 'page-subpage'}">`)
@@ -389,6 +413,7 @@ function compilePage(page, data, lang) {
       .replace('{{PAGE_TITLE}}', isEn ? `${page.titleEn} — Alex Kiessling` : `${page.titleDe} — Alex Kiessling`)
       .replace(/\{\{PREFIX\}\}/g, prefix)
       .replace(/\{\{LANG_PATH\}\}/g, isEn ? 'en/' : '')
+      .replace('{{LCP_PRELOAD}}', lcpPreloadHtml)
       .replace('{{BG_ART_1}}', bgArt1Url)
       .replace('{{BG_ART_2}}', bgArt2Url)
       .replace('{{BG_ART_3}}', bgArt3Url);

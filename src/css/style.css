@@ -517,24 +517,24 @@ a {
   background-color: var(--text-ink);
   position: absolute;
   left: 0;
-  transition: var(--transition-fast);
+  top: 10px;
+  transition: transform var(--transition-fast) ease, opacity var(--transition-fast) ease;
 }
 
 .burger-bar:nth-child(1) {
-  top: 4px;
+  transform: translateY(-6px);
 }
 
 .burger-bar:nth-child(2) {
-  top: 10px;
+  transform: translateY(0);
 }
 
 .burger-bar:nth-child(3) {
-  top: 16px;
+  transform: translateY(6px);
 }
 
 .burger-menu-btn.open .burger-bar:nth-child(1) {
-  transform: rotate(45deg);
-  top: 10px;
+  transform: translateY(0) rotate(45deg);
 }
 
 .burger-menu-btn.open .burger-bar:nth-child(2) {
@@ -542,8 +542,7 @@ a {
 }
 
 .burger-menu-btn.open .burger-bar:nth-child(3) {
-  transform: rotate(-45deg);
-  top: 10px;
+  transform: translateY(0) rotate(-45deg);
 }
 
 body.menu-open {
@@ -2308,24 +2307,24 @@ body.menu-open .header {
     background-color: #000000;
     position: absolute;
     left: 2px;
-    transition: all var(--transition-fast) ease;
+    top: 9px;
+    transition: transform var(--transition-fast) ease, opacity var(--transition-fast) ease;
   }
 
   .burger-bar:nth-child(1) {
-    top: 3px;
+    transform: translateY(-6px);
   }
 
   .burger-bar:nth-child(2) {
-    top: 9px;
+    transform: translateY(0);
   }
 
   .burger-bar:nth-child(3) {
-    top: 15px;
+    transform: translateY(6px);
   }
 
   .burger-menu-btn.open .burger-bar:nth-child(1) {
-    transform: rotate(45deg);
-    top: 9px;
+    transform: translateY(0) rotate(45deg);
   }
 
   .burger-menu-btn.open .burger-bar:nth-child(2) {
@@ -2333,8 +2332,7 @@ body.menu-open .header {
   }
 
   .burger-menu-btn.open .burger-bar:nth-child(3) {
-    transform: rotate(-45deg);
-    top: 9px;
+    transform: translateY(0) rotate(-45deg);
   }
 
   .nav {

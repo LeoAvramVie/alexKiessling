@@ -1,3 +1,9 @@
+const isPlaceholder = (val) => {
+  if (!val) return true;
+  const s = val.toLowerCase().trim();
+  return s === '' || s === 'k.a.' || s === 'undefined' || s === 'null' || s === 'tba' || s === 'tbd';
+};
+
 export function initGallery() {
   const filterTabs = document.querySelectorAll('.filter-tabs-container button');
   const grid = document.querySelector('.gallery-masonry-grid');
@@ -150,6 +156,14 @@ export function initGallery() {
   let lastScrollY = 0;
 
   cards.forEach(card => {
+    // Keydown accessibility for keyboard users (Enter/Space to click)
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+
     card.addEventListener('click', () => {
       lastScrollY = window.scrollY; // Capture scroll position before modifying body classes
       activeCard = card;
@@ -162,12 +176,6 @@ export function initGallery() {
       // Parse year and dimensions from title first, fallback to dataset, or use 'TBA'
       let finalYear = 'TBA';
       let finalDim = 'TBA';
-
-      const isPlaceholder = (val) => {
-        if (!val) return true;
-        const s = val.toLowerCase().trim();
-        return s === '' || s === 'k.a.' || s === 'undefined' || s === 'null' || s === 'tba' || s === 'tbd';
-      };
 
       const cleanMedium = isPlaceholder(medium) ? 'TBA' : medium.trim();
 
@@ -332,25 +340,33 @@ export function initGallery() {
     gyroActive = true;
   }
 
+  let gyroTicking = false;
+
   function handleGyroscope(e) {
     if (!lightbox.classList.contains('open')) return;
+    if (gyroTicking) return;
     
-    // Gamma: left/right tilt (-90 to 90)
-    // Beta: front/back tilt (-180 to 180)
-    const tiltX = e.gamma || 0;
-    const tiltY = e.beta || 0;
+    window.requestAnimationFrame(() => {
+      // Gamma: left/right tilt (-90 to 90)
+      // Beta: front/back tilt (-180 to 180)
+      const tiltX = e.gamma || 0;
+      const tiltY = e.beta || 0;
 
-    // Smooth limits
-    const maxOffset = 15; // Max translation in pixels
-    const moveX = (tiltX / 45) * maxOffset;
-    const moveY = ((tiltY - 45) / 45) * maxOffset; // Adjusted for natural reading hold angle (~45 deg tilt)
+      // Smooth limits
+      const maxOffset = 15; // Max translation in pixels
+      const moveX = (tiltX / 45) * maxOffset;
+      const moveY = ((tiltY - 45) / 45) * maxOffset; // Adjusted for natural reading hold angle (~45 deg tilt)
 
-    const clampedX = Math.min(Math.max(moveX, -maxOffset), maxOffset);
-    const clampedY = Math.min(Math.max(moveY, -maxOffset), maxOffset);
+      const clampedX = Math.min(Math.max(moveX, -maxOffset), maxOffset);
+      const clampedY = Math.min(Math.max(moveY, -maxOffset), maxOffset);
 
-    // Apply translation to active lightbox image
-    lightboxImg.style.transform = `translate3d(${clampedX}px, ${clampedY}px, 0px) scale(1.03)`;
-    lightboxImg.style.transition = 'transform 0.1s ease-out';
+      // Apply translation to active lightbox image
+      lightboxImg.style.transform = `translate3d(${clampedX}px, ${clampedY}px, 0px) scale(1.03)`;
+      lightboxImg.style.transition = 'transform 0.1s ease-out';
+      gyroTicking = false;
+    });
+
+    gyroTicking = true;
   }
 
   // --- 8. LOAD EVENT REFLOW FOR MASONRY HEIGHTS ---

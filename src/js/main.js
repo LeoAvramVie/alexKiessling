@@ -60,9 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const scrollY = window.scrollY;
-          if (art1) art1.style.transform = `translateY(${scrollY * 0.26}px) rotate(${scrollY * 0.015}deg)`;
-          if (art2) art2.style.transform = `translateY(${scrollY * -0.2}px) rotate(${scrollY * -0.008}deg)`;
-          if (art3) art3.style.transform = `translateY(${scrollY * 0.1}px)`;
+          if (art1) art1.style.transform = `translate3d(0, ${scrollY * 0.26}px, 0) rotate(${scrollY * 0.015}deg)`;
+          if (art2) art2.style.transform = `translate3d(0, ${scrollY * -0.2}px, 0) rotate(${scrollY * -0.008}deg)`;
+          if (art3) art3.style.transform = `translate3d(0, ${scrollY * 0.1}px, 0)`;
           ticking = false;
         });
         ticking = true;
