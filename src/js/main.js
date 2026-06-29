@@ -202,4 +202,142 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // --- 10. PROJECTS CAROUSEL LOGIC ---
+  const carouselContainer = document.querySelector('.projects-carousel-container');
+  if (carouselContainer) {
+    const track = carouselContainer.querySelector('.projects-carousel-track');
+    const slides = Array.from(track.children);
+    const prevBtn = carouselContainer.querySelector('.carousel-control.prev');
+    const nextBtn = carouselContainer.querySelector('.carousel-control.next');
+    const dotsContainer = carouselContainer.querySelector('.carousel-dots');
+
+    if (slides.length > 0) {
+      if (slides.length <= 1) {
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+      } else {
+        let currentIndex = 0;
+        let autoPlayInterval = null;
+
+        // Generate dot navigators
+        slides.forEach((_, idx) => {
+          const dot = document.createElement('button');
+          dot.classList.add('carousel-dot');
+          if (idx === 0) dot.classList.add('active');
+          dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+          dotsContainer.appendChild(dot);
+
+          dot.addEventListener('click', () => {
+            goToSlide(idx);
+            resetAutoPlay();
+          });
+        });
+
+        const dots = Array.from(dotsContainer.children);
+
+        // Generate thumbnail preview row
+        const thumbnailsContainer = document.createElement('div');
+        thumbnailsContainer.classList.add('carousel-thumbnails');
+        carouselContainer.appendChild(thumbnailsContainer);
+
+        slides.forEach((slide, idx) => {
+          const img = slide.querySelector('.gallery-image');
+          if (img) {
+            const thumbBtn = document.createElement('button');
+            thumbBtn.classList.add('carousel-thumbnail');
+            if (idx === 0) thumbBtn.classList.add('active');
+            thumbBtn.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+
+            const thumbImg = document.createElement('img');
+            thumbImg.src = img.src;
+            thumbImg.alt = img.alt;
+            thumbImg.loading = 'lazy';
+            
+            thumbBtn.appendChild(thumbImg);
+            thumbnailsContainer.appendChild(thumbBtn);
+
+            thumbBtn.addEventListener('click', () => {
+              goToSlide(idx);
+              resetAutoPlay();
+            });
+          }
+        });
+
+        const thumbs = Array.from(thumbnailsContainer.children);
+
+        const updateSlidePosition = () => {
+          track.style.transform = `translateX(-${currentIndex * 100}%)`;
+          dots.forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === currentIndex);
+          });
+          thumbs.forEach((thumb, idx) => {
+            thumb.classList.toggle('active', idx === currentIndex);
+          });
+        };
+
+        const goToSlide = (index) => {
+          currentIndex = (index + slides.length) % slides.length;
+          updateSlidePosition();
+        };
+
+        const nextSlide = () => {
+          goToSlide(currentIndex + 1);
+        };
+
+        const prevSlide = () => {
+          goToSlide(currentIndex - 1);
+        };
+
+        prevBtn.addEventListener('click', () => {
+          prevSlide();
+          resetAutoPlay();
+        });
+
+        nextBtn.addEventListener('click', () => {
+          nextSlide();
+          resetAutoPlay();
+        });
+
+        // Touch swiping gestures for mobile devices
+        let startX = 0;
+        let isSwiping = false;
+
+        track.addEventListener('touchstart', (e) => {
+          startX = e.touches[0].clientX;
+          isSwiping = true;
+        }, { passive: true });
+
+        track.addEventListener('touchmove', (e) => {
+          if (!isSwiping) return;
+          const diffX = e.touches[0].clientX - startX;
+          if (Math.abs(diffX) > 40) {
+            if (diffX > 0) {
+              prevSlide();
+            } else {
+              nextSlide();
+            }
+            isSwiping = false;
+            resetAutoPlay();
+          }
+        }, { passive: true });
+
+        track.addEventListener('touchend', () => {
+          isSwiping = false;
+        });
+
+        // Autoplay loop (5 seconds)
+        const startAutoPlay = () => {
+          autoPlayInterval = setInterval(nextSlide, 5000);
+        };
+
+        const resetAutoPlay = () => {
+          clearInterval(autoPlayInterval);
+          startAutoPlay();
+        };
+
+        startAutoPlay();
+      }
+    }
+  }
 });

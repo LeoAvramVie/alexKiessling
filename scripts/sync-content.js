@@ -388,6 +388,7 @@ function compilePage(page, data, lang) {
       .replace('<html lang="de">', `<html lang="${lang}">`)
       .replace('{{PAGE_TITLE}}', isEn ? `${page.titleEn} — Alex Kiessling` : `${page.titleDe} — Alex Kiessling`)
       .replace(/\{\{PREFIX\}\}/g, prefix)
+      .replace(/\{\{LANG_PATH\}\}/g, isEn ? 'en/' : '')
       .replace('{{BG_ART_1}}', bgArt1Url)
       .replace('{{BG_ART_2}}', bgArt2Url)
       .replace('{{BG_ART_3}}', bgArt3Url);

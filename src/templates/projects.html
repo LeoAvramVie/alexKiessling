@@ -31,8 +31,20 @@
     <div class="project-artworks-container">
       <h4 class="gallery-sub-heading lang-de">Werke aus dem LDA-Projekt</h4>
       <h4 class="gallery-sub-heading lang-en">LDA Project Artworks</h4>
-      <div class="projects-art-grid">
-        {{LONG_DISTANCE_ART_GRID}}
+      <div class="projects-carousel-container">
+        <button class="carousel-control prev" aria-label="Vorheriges Bild / Previous image">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="projects-carousel-track-wrapper">
+          <div class="projects-carousel-track">
+            {{LONG_DISTANCE_ART_GRID}}
+          </div>
+        </div>
+        <button class="carousel-control next" aria-label="Nächstes Bild / Next image">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        <!-- Indicator Dots -->
+        <div class="carousel-dots"></div>
       </div>
     </div>
   </div>
