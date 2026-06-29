@@ -436,6 +436,7 @@ a {
 .nav.open .nav-links a:nth-child(5) { transition-delay: 0.28s; }
 .nav.open .nav-links a:nth-child(6) { transition-delay: 0.33s; }
 .nav.open .nav-links a:nth-child(7) { transition-delay: 0.38s; }
+.nav.open .nav-links a:nth-child(8) { transition-delay: 0.43s; }
 
 .nav-download-link {
   display: inline-flex !important;

@@ -340,4 +340,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
+
+  // --- 11. OBFUSCATED EMAIL CONTACT TRIGGER ---
+  const contactTriggers = document.querySelectorAll('.nav-contact-trigger');
+  contactTriggers.forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const user = trigger.getAttribute('data-user');
+      const domain = trigger.getAttribute('data-domain');
+      if (user && domain) {
+        window.location.href = `mailto:${user}@${domain}`;
+      }
+    });
+  });
 });
