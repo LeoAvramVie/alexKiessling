@@ -2975,8 +2975,8 @@ body.menu-open .header {
 /* --- 18. BACK TO HOME BUTTON --- */
 .back-to-home-btn {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
+  top: 2.2rem;
+  left: 2.2rem;
   width: 3.2rem;
   height: 3.2rem;
   border-radius: 50%;
@@ -2989,7 +2989,7 @@ body.menu-open .header {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 99;
+  z-index: 130;
   box-shadow: 0 8px 24px rgba(22, 22, 21, 0.05);
   transition: 
     opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -3037,11 +3037,15 @@ body.menu-open .header {
     height: 1.15rem;
   }
   .back-to-home-btn {
-    bottom: 5.5rem !important; /* Raised position for mobile bottom zone */
+    top: 1.2rem !important;
     left: 1.2rem !important;
+    bottom: auto !important;
     width: 2.8rem;
     height: 2.8rem;
     box-shadow: 0 6px 18px rgba(22, 22, 21, 0.08);
+  }
+  .page-subpage .header-socials {
+    display: none !important;
   }
   .home-svg {
     width: 1.1rem;
